@@ -49,6 +49,20 @@ input[type=search]{width:100%;margin-bottom:10px}
 .tag{font-size:11px;padding:2px 8px;border-radius:10px;background:var(--line)}
 @media(max-width:520px){main{padding:14px 10px}header{padding:10px 12px}header h1{font-size:16px;margin-right:8px}nav button{padding:8px 10px;font-size:14px}.card{padding:22px 14px;min-height:240px}.word{font-size:28px}.ans{font-size:22px}.btns{gap:6px}button.g{padding:12px 2px;font-size:13px}.counts{gap:10px;font-size:13px}}
 body{-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom)}
+
+[data-theme=dark]{--bg:#14171f;--card:#1e2330;--ink:#e8ebf2;--mute:#9aa3b8;--line:#2d3446;--acc:#6c8cff}
+[data-theme=light]{--bg:#f4f5f7;--card:#fff;--ink:#1d2330;--mute:#6b7385;--line:#dfe3ea;--acc:#2f5bea}
+button.lnk{border:0;background:none;color:var(--acc);font:inherit;font-size:13px;cursor:pointer;padding:2px 4px;text-decoration:underline}
+.note{background:#d98a0022;border:1px solid var(--warn);border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:12px}
+.ok{color:var(--ok);font-weight:600}.bad{color:var(--bad);font-weight:600}
+.btns2{display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-top:14px}.btns2 .show{margin-top:0}
+button.g.sug{outline:3px solid var(--acc);outline-offset:1px}
+.box h3{margin:0 0 10px;font-size:16px}
+.row span small{color:var(--mute)}
+label.row{cursor:pointer;margin:6px 0}
+.row{justify-content:space-between}
+label.row,.row:has(button){justify-content:flex-start}
+select{max-width:60%}
 </style>
 </head>
 <body>
@@ -5023,22 +5037,30 @@ you|du, Sie, ihr|(pron.)
 young|jung|(adj., n.)
 your|dein, Ihr|(det.)
 yourself|dich selbst|(pron.)`;
+const VERSION='2.1';
 const KEY='vokabeltrainer_v2';
 const MIN=60000, DAY=86400000, STEPS=[1,10], RELEARN=[10];
-// ---------- Daten (Fortschritt wird pro Wort gespeichert, nicht pro Nummer) ----------
+const LEVELS=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];
+const DEF={newPerDay:15,revLimit:200,order:'level',dir:'en-de',typing:false,tts:true,accent:'en-GB',rate:1,ivlMod:1,theme:'auto',font:1,backup:true,off:null};
+// ---------- Daten (Fortschritt wird pro Wort gespeichert) ----------
 let cat='';const CARDS=[];
 function addCard(en,de,ex,c){const id=en.toLowerCase();if(CARDS.some(x=>x.id===id))return;CARDS.push({id,en,de,ex:ex||'',cat:c})}
 RAW.split('\n').forEach(l=>{l=l.trim();if(!l)return;if(l[0]==='#'){cat=l.slice(1);return}
  const p=l.split('|');addCard(p[0],p[1],p[2],cat)});
 const getCats=()=>[...new Set(CARDS.map(c=>c.cat))];
 // ---------- State ----------
-let S;
-function load(){try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
- if(!S)S={cards:{},set:{newPerDay:15,dir:'en-de',tts:true},day:{d:'',n:0}};
- S.set=Object.assign({newPerDay:15,dir:'en-de',tts:true,skipBasic:true},S.set);S.day=S.day||{d:'',n:0}}
+let S,lastUndo=null;
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+function load(){let st;try{st=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+ S=st||{cards:{},set:{},day:{}};S.cards=S.cards||{};
+ const legacy=S.set&&S.set.skipBasic;
+ S.set=Object.assign({},DEF,S.set||{});
+ if(!Array.isArray(S.set.off))S.set.off=(legacy===false)?[]:['Oxford 3000 · A1','Oxford 3000 · A2'];
+ S.day=Object.assign({d:'',n:0,r:0},S.day||{});applyLook()}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-const today=()=>new Date().toISOString().slice(0,10);
-function newToday(){if(S.day.d!==today())S.day={d:today(),n:0};return S.day.n}
+function dayc(){if(S.day.d!==today())S.day={d:today(),n:0,r:0};return S.day}
+function applyLook(){const r=document.documentElement;if(S.set.theme==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',S.set.theme);
+ const m=document.getElementById('app');if(m)m.style.zoom=S.set.font}
 // ---------- SM-2 Scheduler (Anki-Stil) ----------
 function fmt(ms){const m=ms/MIN;if(m<60)return Math.max(1,Math.round(m))+' Min';const h=m/60;if(h<24)return Math.round(h)+' Std';
  const d=h/24;if(d<30)return Math.round(d)+' Tg';if(d<365)return (d/30).toFixed(1).replace('.0','')+' Mon';return (d/365).toFixed(1)+' J'}
@@ -5057,88 +5079,154 @@ function preview(st,g){
   if(g===1){o.lapses++;o.ease=Math.max(1.3,c.ease-.2);o.ivl=Math.max(1,Math.round(c.ivl*.5));o.state='relearning';o.step=0;o.wait=RELEARN[0]*MIN}
   else{const f=g===2?1.2:g===3?c.ease:c.ease*1.3;
    if(g===2)o.ease=Math.max(1.3,c.ease-.15);if(g===4)o.ease=c.ease+.15;
-   let n=Math.max(c.ivl+1,Math.round(c.ivl*f));if(n>7)n=Math.round(n*(.95+Math.random()*.1));
+   let n=Math.max(c.ivl+1,Math.round(c.ivl*f*(S.set.ivlMod||1)));if(n>7)n=Math.round(n*(.95+Math.random()*.1));
    o.ivl=n;o.wait=n*DAY;o.state='review'}
  }
  return o}
-function answer(id,g){const was=S.cards[id]?S.cards[id].state:'new';const o=preview(S.cards[id],g);
- if(was==='new'){newToday();S.day.n++}
+function answer(id,g){const prev=S.cards[id]?JSON.parse(JSON.stringify(S.cards[id])):null;const D=dayc();lastUndo={id,prev,day:{n:D.n,r:D.r}};
+ const was=prev?prev.state:'new';const o=preview(S.cards[id],g);
+ if(was==='new')D.n++;else if(was==='review')D.r++;
  o.due=Date.now()+o.wait;delete o.wait;S.cards[id]=o;save()}
+function undo(){if(!lastUndo)return;const u=lastUndo;if(u.prev)S.cards[u.id]=u.prev;else delete S.cards[u.id];
+ const D=dayc();D.n=u.day.n;D.r=u.day.r;lastUndo=null;save()}
 // ---------- Queue ----------
-const isBasic=c=>c.cat==='Oxford 3000 · A1'||c.cat==='Oxford 3000 · A2';
-function queue(){const now=Date.now();const learn=[],rev=[],nw=[];
+const hs=s=>{let h=0;for(const ch of s+today())h=(h*31+ch.charCodeAt(0))|0;return h};
+function queue(){const now=Date.now(),D=dayc();const learn=[],rev=[],nw=[];
  for(const c of CARDS){const s=S.cards[c.id];
-  if(!s){if(!(S.set.skipBasic&&isBasic(c)))nw.push(c)}else if(s.state==='review'){if(s.due<=now)rev.push(c)}else if(s.due<=now)learn.push(c)}
+  if(!s){if(!S.set.off.includes(c.cat))nw.push(c)}
+  else if(s.state==='suspended'){}
+  else if(s.state==='review'){if(s.due<=now)rev.push(c)}
+  else if(s.due<=now)learn.push(c)}
  const due=c=>S.cards[c.id].due;rev.sort((a,b)=>due(a)-due(b));learn.sort((a,b)=>due(a)-due(b));
- const ORDER=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];const pr=c=>{const i=ORDER.findIndex(o=>c.cat.startsWith(o));return i<0?9:i};
- nw.sort((a,b)=>pr(a)-pr(b));
- const left=Math.max(0,S.set.newPerDay-newToday());
- return {learn,rev,nw:nw.slice(0,left),newTotal:nw.length}}
+ const pr=c=>{const i=LEVELS.indexOf(c.cat);return i<0?-1:i};
+ if(S.set.order==='alpha')nw.sort((a,b)=>a.en.localeCompare(b.en));
+ else if(S.set.order==='random')nw.sort((a,b)=>hs(a.id)-hs(b.id));
+ else nw.sort((a,b)=>pr(a)-pr(b));
+ const rl=S.set.revLimit>0?Math.max(0,S.set.revLimit-D.r):1e9;
+ const left=Math.max(0,S.set.newPerDay-D.n);
+ return {learn,rev:rev.slice(0,rl),revTotal:rev.length,nw:nw.slice(0,left),newTotal:nw.length}}
 function nextCard(q){if(q.learn.length)return q.learn[0];
  if(q.rev.length&&(q.nw.length===0||Math.random()<.7))return q.rev[0];
  if(q.nw.length)return q.nw[0];if(q.rev.length)return q.rev[0];return null}
+// ---------- Tippen ----------
+const norm=s=>s.toLowerCase().replace(/[’`´]/g,"'").replace(/\s+/g,' ').trim().replace(/[.!?]$/,'');
+function answers(en){const base=en.replace(/\s*\([^)]*\)/g,'').replace(/\d+$/,'');return base.split(/\s*[,/]\s*/).filter(Boolean).map(norm)}
 // ---------- UI ----------
-const app=document.getElementById('app');let view='learn',cur=null,shown=false;
+const app=document.getElementById('app');let view='learn',cur=null,shown=false,curDir='en-de';
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{view=b.dataset.v;document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));render()});
-function speak(t){if(!S.set.tts||!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';speechSynthesis.speak(u)}
+function speak(t){if(!S.set.tts||!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=S.set.accent;u.rate=S.set.rate;speechSynthesis.speak(u)}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function render(){({learn:rLearn,stats:rStats,browse:rBrowse,set:rSet})[view]()}
+function exportData(share){S.lastExport=Date.now();save();const name='vokabeln-fortschritt-'+today()+'.json';const blob=new Blob([JSON.stringify(S)],{type:'application/json'});
+ if(share&&navigator.canShare){const f=new File([blob],name,{type:'application/json'});if(navigator.canShare({files:[f]})){navigator.share({files:[f],title:name}).catch(()=>{});return}}
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click()}
+function needBackup(){if(!S.set.backup)return false;const started=Object.keys(S.cards).length;if(started<30)return false;return !S.lastExport||Date.now()-S.lastExport>7*DAY}
 function rLearn(){const q=queue();cur=nextCard(q);shown=false;
- const counts=`<div class="counts"><span>Neu <b class="n">${q.nw.length}</b></span><span>Lernphase <b class="l">${q.learn.length}</b></span><span>Wiederholen <b class="r">${q.rev.length}</b></span></div>`;
+ const counts=`<div class="counts"><span>Neu <b class="n">${q.nw.length}</b></span><span>Lernphase <b class="l">${q.learn.length}</b></span><span>Wiederholen <b class="r">${q.rev.length}</b></span>${lastUndo?'<button class="lnk" id="undo">↶ Rückgängig</button>':''}</div>`
+  +(needBackup()?`<div class="note">Dein Lernstand ist nur auf diesem Gerät gespeichert und seit über 7 Tagen nicht gesichert. <button class="lnk" id="bk">Jetzt sichern</button></div>`:'');
+ const wire=()=>{const u=document.getElementById('undo');if(u)u.onclick=()=>{undo();rLearn()};const b=document.getElementById('bk');if(b)b.onclick=()=>{exportData(true);rLearn()}};
  if(!cur){
-  const pend=CARDS.map(c=>S.cards[c.id]).filter(s=>s&&s.state!=='review'&&s.due>Date.now()).sort((a,b)=>a.due-b.due);
+  const pend=CARDS.map(c=>S.cards[c.id]).filter(s=>s&&s.state!=='review'&&s.state!=='suspended'&&s.due>Date.now()).sort((a,b)=>a.due-b.due);
+  const D=dayc();
   app.innerHTML=counts+`<div class="card"><div class="word">Für heute geschafft!</div><div class="ex">${pend.length?`Nächste Karte in ${fmt(pend[0].due-Date.now())}.`:'Komm morgen wieder.'}</div>
-  ${q.newTotal?`<div><button class="ghost g" id="more" style="padding:12px 20px">+10 neue Wörter lernen</button></div>`:''}</div>`;
-  const m=document.getElementById('more');if(m)m.onclick=()=>{S.set.newPerDay+=10;save();rLearn()};return}
- const s=S.cards[cur.id];const isNew=!s;const rev=S.set.dir==='de-en';
- const front=rev?cur.de:cur.en, back=rev?cur.en:cur.de;
+  <div class="ex">Heute: ${D.n} neu, ${D.r} wiederholt${q.revTotal>q.rev.length?` · ${q.revTotal-q.rev.length} Wiederholungen warten (Limit)`:''}</div>
+  <div>${q.newTotal?`<button class="ghost g" id="more" style="padding:12px 20px">+10 neue Wörter lernen</button>`:''}${q.revTotal>q.rev.length?` <button class="ghost g" id="morer" style="padding:12px 20px">+50 Wiederholungen</button>`:''}</div></div>`;
+  wire();
+  const m=document.getElementById('more');if(m)m.onclick=()=>{S.set.newPerDay+=10;save();rLearn()};
+  const mr=document.getElementById('morer');if(mr)mr.onclick=()=>{S.set.revLimit+=50;save();rLearn()};return}
+ const s=S.cards[cur.id];const isNew=!s;
+ curDir=S.set.dir==='mix'?(Math.random()<.5?'en-de':'de-en'):S.set.dir;
+ const rev=curDir==='de-en';const typing=rev&&S.set.typing;
+ const front=rev?cur.de:cur.en;const back=rev?cur.en:cur.de;
  app.innerHTML=counts+`<div class="card"><div class="cat">${esc(cur.cat)} ${isNew?'· neu':''}</div>
   <div class="word">${esc(front)} ${!rev?'<button class="sp" id="spk" title="Aussprache">🔊</button>':''}</div>
+  ${typing?`<div><input id="typed" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Englisch eintippen…" style="width:100%;max-width:340px;text-align:center;font-size:20px"></div><div id="fb"></div>`:''}
   <div id="back" style="display:none;gap:12px;flex-direction:column"><div class="ans">${esc(back)} ${rev?'<button class="sp" id="spk2">🔊</button>':''}</div><div class="ex">${esc(cur.ex)}</div></div></div>
-  <div id="ctl"><button class="show" id="sh">Antwort zeigen (Leertaste)</button></div>
+  <div id="ctl">${typing?`<div class="btns2"><button class="show" id="chk">Prüfen (Enter)</button><button class="ghost g" id="sh">Weiß ich nicht</button></div>`:`<button class="show" id="sh">Antwort zeigen (Leertaste)</button>`}</div>
+  <div class="hint">${isNew?'<button class="lnk" id="known">Schon bekannt</button> · ':''}<button class="lnk" id="hide">Nie wieder zeigen</button></div>
   <div class="hint">Tipp: Bilde laut oder schriftlich einen eigenen Satz mit dem Wort, bevor du aufdeckst.</div>`;
+ wire();
  const sp=document.getElementById('spk');if(sp)sp.onclick=()=>speak(cur.en);
- document.getElementById('sh').onclick=reveal}
-function reveal(){if(shown||!cur)return;shown=true;document.getElementById('back').style.display='flex';
+ document.getElementById('sh').onclick=()=>reveal();
+ if(typing){const inp=document.getElementById('typed');inp.focus();
+  const chk=()=>{const ok=answers(cur.en).includes(norm(inp.value));document.getElementById('fb').innerHTML=ok?'<div class="ok">✓ richtig</div>':'<div class="bad">✗ falsch'+(inp.value.trim()?': '+esc(inp.value):'')+'</div>';inp.disabled=true;reveal(ok?3:1)};
+  document.getElementById('chk').onclick=chk;inp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();if(!shown)chk()}}}
+ const k=document.getElementById('known');if(k)k.onclick=()=>{S.cards[cur.id]={state:'review',step:0,ease:2.5,ivl:21,lapses:0,reps:1,due:Date.now()+21*DAY};lastUndo={id:cur.id,prev:null,day:{n:dayc().n,r:dayc().r}};save();rLearn()};
+ document.getElementById('hide').onclick=()=>{const prev=S.cards[cur.id]?JSON.parse(JSON.stringify(S.cards[cur.id])):null;lastUndo={id:cur.id,prev,day:{n:dayc().n,r:dayc().r}};S.cards[cur.id]={state:'suspended'};save();rLearn()}}
+function reveal(sug){if(shown||!cur)return;shown=true;document.getElementById('back').style.display='flex';
+ const inp=document.getElementById('typed');if(inp){inp.disabled=true;inp.blur()}
  const sp=document.getElementById('spk2');if(sp)sp.onclick=()=>speak(cur.en);
  speak(cur.en);
  const st=S.cards[cur.id];const L=['Nochmal','Schwer','Gut','Leicht'];
- document.getElementById('ctl').innerHTML=`<div class="btns">${[1,2,3,4].map(g=>`<button class="g g${g}" data-g="${g}">${L[g-1]} (${g})<small>${fmt(preview(st,g).wait)}</small></button>`).join('')}</div>`;
+ document.getElementById('ctl').innerHTML=`<div class="btns">${[1,2,3,4].map(g=>`<button class="g g${g}${sug===g?' sug':''}" data-g="${g}">${L[g-1]} (${g})<small>${fmt(preview(st,g).wait)}</small></button>`).join('')}</div>`;
  document.querySelectorAll('.g').forEach(b=>b.onclick=()=>{answer(cur.id,+b.dataset.g);rLearn()})}
-document.addEventListener('keydown',e=>{if(view!=='learn'||!cur||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+document.addEventListener('keydown',e=>{if(view!=='learn'||!cur||['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;
  if(e.code==='Space'){e.preventDefault();reveal()}else if(shown&&'1234'.includes(e.key)){answer(cur.id,+e.key);rLearn()}});
-function rStats(){const vis=CARDS.filter(c=>!(S.set.skipBasic&&isBasic(c)&&!S.cards[c.id]));const total=vis.length;let nw=0,lrn=0,yg=0,mt=0;
+function rStats(){const vis=CARDS.filter(c=>S.cards[c.id]||!S.set.off.includes(c.cat));const total=vis.length;let nw=0,lrn=0,yg=0,mt=0,hid=0;
  const CATS=getCats().filter(c=>vis.some(x=>x.cat===c));const per={};CATS.forEach(c=>per[c]={t:0,k:0});
  for(const c of vis){const s=S.cards[c.id];per[c.cat].t++;
-  if(!s)nw++;else if(s.state!=='review')lrn++;else{(s.ivl>=21?mt++:yg++);per[c.cat].k++}}
- const known=yg+mt;
- app.innerHTML=`<div class="box"><h3 style="margin-top:0">Gesamt: ${known} von ${total} gelernt</h3><div class="bar"><i style="width:${known/total*100}%"></i></div>
- <table><tr><td>Neu (noch nie gesehen)</td><td>${nw}</td></tr><tr><td>In der Lernphase</td><td>${lrn}</td></tr><tr><td>Jung (Intervall &lt; 21 Tage)</td><td>${yg}</td></tr><tr><td>Gefestigt (Intervall ≥ 21 Tage)</td><td>${mt}</td></tr></table></div>
+  if(!s)nw++;else if(s.state==='suspended')hid++;else if(s.state!=='review')lrn++;else{(s.ivl>=21?mt++:yg++);per[c.cat].k++}}
+ const known=yg+mt;const D=dayc();const days=S.set.newPerDay>0?Math.ceil(nw/S.set.newPerDay):0;
+ app.innerHTML=`<div class="box"><h3 style="margin-top:0">Gesamt: ${known} von ${total} gelernt</h3><div class="bar"><i style="width:${total?known/total*100:0}%"></i></div>
+ <table><tr><td>Heute neu / wiederholt</td><td>${D.n} / ${D.r}</td></tr><tr><td>Neu (noch nie gesehen)</td><td>${nw}</td></tr><tr><td>In der Lernphase</td><td>${lrn}</td></tr><tr><td>Jung (Intervall &lt; 21 Tage)</td><td>${yg}</td></tr><tr><td>Gefestigt (Intervall ≥ 21 Tage)</td><td>${mt}</td></tr><tr><td>Ausgeblendet</td><td>${hid}</td></tr>
+ <tr><td>Alle neuen Wörter einmal gesehen in</td><td>ca. ${days} Tagen</td></tr></table></div>
  <div class="box"><h3 style="margin-top:0">Nach Kategorie</h3>${CATS.map(c=>`<div>${esc(c)} <span class="tag">${per[c].k}/${per[c].t}</span></div><div class="bar"><i style="width:${per[c].k/per[c].t*100}%"></i></div>`).join('')}</div>`}
 function rBrowse(){app.innerHTML=`<input type="search" id="q" placeholder="Wort suchen (Englisch oder Deutsch)…"><div class="box" id="lst"></div>`;
  const f=()=>{const q=document.getElementById('q').value.toLowerCase();const r=CARDS.filter(c=>!q||c.en.toLowerCase().includes(q)||c.de.toLowerCase().includes(q)).slice(0,150);
-  document.getElementById('lst').innerHTML='<table>'+r.map(c=>{const s=S.cards[c.id];const t=!s?'neu':s.state==='review'?(s.ivl+' Tg'):'lernt';
+  document.getElementById('lst').innerHTML='<table>'+r.map(c=>{const s=S.cards[c.id];const t=!s?'neu':s.state==='suspended'?'ausgeblendet':s.state==='review'?(s.ivl+' Tg'):'lernt';
    return `<tr><td><b>${esc(c.en)}</b></td><td>${esc(c.de)}</td><td><span class="tag">${t}</span></td></tr>`}).join('')+'</table>'+(r.length===150?'<div class="hint">Nur die ersten 150 Treffer – Suche eingrenzen.</div>':'')};
  document.getElementById('q').oninput=f;f()}
-function rSet(){app.innerHTML=`<div class="box"><div class="row">Neue Wörter pro Tag <input type="number" id="npd" min="1" max="100" value="${S.set.newPerDay}" style="width:80px"></div>
- <div class="row">Abfragerichtung <select id="dir"><option value="en-de">Englisch → Deutsch</option><option value="de-en">Deutsch → Englisch (Satzbildung üben)</option></select></div>
- <div class="row"><label><input type="checkbox" id="skipb" ${S.set.skipBasic?'checked':''}> A1/A2-Grundwortschatz (Oxford 3000) überspringen</label></div>
- <div class="row"><label><input type="checkbox" id="tts" ${S.set.tts?'checked':''}> Aussprache automatisch vorlesen</label></div></div>
- <div class="box"><h3 style="margin-top:0">Lernstand sichern</h3><div class="hint" style="text-align:left">Der Fortschritt liegt nur in diesem Browser. Sichere ihn regelmäßig als Datei.</div>
- <div class="row"><button class="ghost g" id="exp">Exportieren</button><button class="ghost g" id="imp">Importieren</button><input type="file" id="file" accept=".json" style="display:none"><button class="ghost g" id="rst" style="color:var(--bad)">Alles zurücksetzen</button></div></div>
- <div class="box"><h3 style="margin-top:0">Eigene Wörter hinzufügen</h3><div class="hint" style="text-align:left">Format pro Zeile: englisch|deutsch|Beispielsatz</div>
- <textarea id="own" rows="4" style="width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)"></textarea><div class="row"><button class="ghost g" id="addown">Hinzufügen</button></div></div>`;
- document.getElementById('dir').value=S.set.dir;
- document.getElementById('npd').onchange=e=>{S.set.newPerDay=Math.max(1,+e.target.value||15);save()};
- document.getElementById('dir').onchange=e=>{S.set.dir=e.target.value;save()};
- document.getElementById('skipb').onchange=e=>{S.set.skipBasic=e.target.checked;save()};
- document.getElementById('tts').onchange=e=>{S.set.tts=e.target.checked;save()};
- document.getElementById('exp').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='vokabeln-fortschritt-'+today()+'.json';a.click()};
- document.getElementById('imp').onclick=()=>document.getElementById('file').click();
- document.getElementById('file').onchange=e=>{const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.cards)throw 0;S=d;save();load();alert('Importiert.');rSet()}catch(x){alert('Datei ungültig.')}};r.readAsText(e.target.files[0])};
- document.getElementById('rst').onclick=()=>{if(confirm('Wirklich den gesamten Lernstand löschen?')){localStorage.removeItem(KEY);load();rSet()}};
- document.getElementById('addown').onclick=()=>{const lines=document.getElementById('own').value.split('\n').map(x=>x.trim()).filter(x=>x.split('|').length>=2);
-  if(!lines.length)return;S.own=(S.own||[]).concat(lines);save();lines.forEach(l=>{const p=l.split('|');addCard(p[0],p[1],p[2],'Eigene Wörter')});alert(lines.length+' Wörter hinzugefügt.');document.getElementById('own').value=''}}
+function opt(v,cur,label){return `<option value="${v}"${String(cur)===String(v)?' selected':''}>${label}</option>`}
+function rSet(){const T=S.set;
+ const catCounts={};CARDS.forEach(c=>{catCounts[c.cat]=(catCounts[c.cat]||0)+1});
+ const cats=LEVELS.filter(l=>catCounts[l]).concat(getCats().filter(c=>!LEVELS.includes(c)));
+ app.innerHTML=`<div class="box"><h3>Lernen</h3>
+ <div class="row"><span>Neue Wörter pro Tag</span><input type="number" id="npd" min="1" max="200" value="${T.newPerDay}" style="width:90px"></div>
+ <div class="row"><span>Max. Wiederholungen pro Tag <small>(0 = unbegrenzt)</small></span><input type="number" id="rl" min="0" max="2000" value="${T.revLimit}" style="width:90px"></div>
+ <div class="row"><span>Reihenfolge neuer Wörter</span><select id="ord">${opt('level',T.order,'Nach Niveau (B2 zuerst)')}${opt('alpha',T.order,'Alphabetisch')}${opt('random',T.order,'Zufällig')}</select></div>
+ <div class="row"><span>Wiederholungsabstände</span><select id="ivl">${opt(0.8,T.ivlMod,'Kürzer (öfter wiederholen)')}${opt(1,T.ivlMod,'Normal')}${opt(1.25,T.ivlMod,'Länger (weniger Wiederholungen)')}</select></div></div>
+ <div class="box"><h3>Welche Wörter lernen?</h3><div class="hint" style="text-align:left;margin:0 0 6px">Gilt für neue Karten. Bereits begonnene Karten werden weiter wiederholt.</div>
+ ${cats.map((c,i)=>`<label class="row"><input type="checkbox" data-cat="${i}" ${T.off.includes(c)?'':'checked'}> ${esc(c)} <span class="tag">${catCounts[c]}</span></label>`).join('')}</div>
+ <div class="box"><h3>Abfrage</h3>
+ <div class="row"><span>Richtung</span><select id="dir">${opt('en-de',T.dir,'Englisch → Deutsch')}${opt('de-en',T.dir,'Deutsch → Englisch')}${opt('mix',T.dir,'Gemischt')}</select></div>
+ <label class="row"><input type="checkbox" id="typ" ${T.typing?'checked':''}> Bei Deutsch → Englisch das Wort eintippen (übt Rechtschreibung)</label>
+ <label class="row"><input type="checkbox" id="tts" ${T.tts?'checked':''}> Aussprache automatisch vorlesen</label>
+ <div class="row"><span>Akzent</span><select id="acc">${opt('en-GB',T.accent,'Britisch')}${opt('en-US',T.accent,'Amerikanisch')}</select></div>
+ <div class="row"><span>Sprechtempo</span><select id="rate">${opt(0.7,T.rate,'Langsam')}${opt(0.85,T.rate,'Etwas langsamer')}${opt(1,T.rate,'Normal')}${opt(1.15,T.rate,'Schneller')}</select> <button class="ghost g" id="test" style="padding:6px 12px">▶ Test</button></div></div>
+ <div class="box"><h3>Darstellung</h3>
+ <div class="row"><span>Design</span><select id="thm">${opt('auto',T.theme,'Automatisch (Gerät)')}${opt('light',T.theme,'Hell')}${opt('dark',T.theme,'Dunkel')}</select></div>
+ <div class="row"><span>Schriftgröße</span><select id="fnt">${opt(0.9,T.font,'Klein')}${opt(1,T.font,'Normal')}${opt(1.15,T.font,'Groß')}${opt(1.3,T.font,'Sehr groß')}</select></div></div>
+ <div class="box"><h3>Lernstand sichern</h3><div class="hint" style="text-align:left;margin:0 0 6px">Der Fortschritt liegt nur auf diesem Gerät. Sichere ihn regelmäßig.</div>
+ <label class="row"><input type="checkbox" id="bkp" ${T.backup?'checked':''}> Erinnerung, wenn die letzte Sicherung über 7 Tage her ist</label>
+ <div class="row"><button class="ghost g" id="exp">Exportieren</button>${navigator.canShare?'<button class="ghost g" id="shr">Teilen…</button>':''}<button class="ghost g" id="imp">Importieren</button><input type="file" id="file" accept=".json" style="display:none"></div>
+ <div class="hint" style="text-align:left">Letzte Sicherung: ${S.lastExport?new Date(S.lastExport).toLocaleString('de-DE'):'noch nie'}</div></div>
+ <div class="box"><h3>Eigene Wörter hinzufügen</h3><div class="hint" style="text-align:left;margin:0 0 6px">Format pro Zeile: englisch|deutsch|Beispielsatz</div>
+ <textarea id="own" rows="3" style="width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)"></textarea><div class="row"><button class="ghost g" id="addown">Hinzufügen</button></div></div>
+ <div class="box"><h3>App</h3><div class="row"><span>Version ${VERSION}</span><button class="ghost g" id="upd">Nach Update suchen</button></div>
+ <div class="row"><button class="ghost g" id="rst" style="color:var(--bad)">Alles zurücksetzen</button></div></div>`;
+ const $=id=>document.getElementById(id);
+ $('npd').onchange=e=>{T.newPerDay=Math.max(1,+e.target.value||15);save()};
+ $('rl').onchange=e=>{T.revLimit=Math.max(0,+e.target.value||0);save()};
+ $('ord').onchange=e=>{T.order=e.target.value;save()};
+ $('ivl').onchange=e=>{T.ivlMod=+e.target.value;save()};
+ document.querySelectorAll('[data-cat]').forEach(cb=>cb.onchange=()=>{const c=cats[+cb.dataset.cat];T.off=T.off.filter(x=>x!==c);if(!cb.checked)T.off.push(c);save()});
+ $('dir').onchange=e=>{T.dir=e.target.value;save()};
+ $('typ').onchange=e=>{T.typing=e.target.checked;save()};
+ $('tts').onchange=e=>{T.tts=e.target.checked;save()};
+ $('acc').onchange=e=>{T.accent=e.target.value;save()};
+ $('rate').onchange=e=>{T.rate=+e.target.value;save()};
+ $('test').onclick=()=>{const w=T.tts;T.tts=true;speak('environment, commute, productive');T.tts=w};
+ $('thm').onchange=e=>{T.theme=e.target.value;save();applyLook()};
+ $('fnt').onchange=e=>{T.font=+e.target.value;save();applyLook()};
+ $('bkp').onchange=e=>{T.backup=e.target.checked;save()};
+ $('exp').onclick=()=>{exportData(false);rSet()};
+ const sh=$('shr');if(sh)sh.onclick=()=>{exportData(true);rSet()};
+ $('imp').onclick=()=>$('file').click();
+ $('file').onchange=e=>{const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.cards)throw 0;localStorage.setItem(KEY,JSON.stringify(d));alert('Importiert. Die App wird neu geladen.');location.reload()}catch(x){alert('Datei ungültig.')}};r.readAsText(e.target.files[0])};
+ $('rst').onclick=()=>{if(confirm('Wirklich den gesamten Lernstand löschen?')){localStorage.removeItem(KEY);location.reload()}};
+ $('addown').onclick=()=>{const lines=$('own').value.split('\n').map(x=>x.trim()).filter(x=>x.split('|').length>=2);
+  if(!lines.length)return;S.own=(S.own||[]).concat(lines);save();lines.forEach(l=>{const p=l.split('|');addCard(p[0],p[1],p[2],'Eigene Wörter')});alert(lines.length+' Wörter hinzugefügt.');$('own').value=''};
+ $('upd').onclick=async()=>{try{if('serviceWorker' in navigator){const r=await navigator.serviceWorker.getRegistration();if(r)await r.update()}}catch(e){}location.reload()}}
 load();
 (S.own||[]).forEach(l=>{const p=l.split('|');addCard(p[0],p[1],p[2],'Eigene Wörter')});
 render();
