@@ -13,28 +13,28 @@
 
 <title>Vokabeltrainer B2</title>
 <style>
-:root{--bg:#f4f5f7;--card:#fff;--ink:#1d2330;--mute:#6b7385;--line:#dfe3ea;--acc:#2f5bea;--ok:#1f9d55;--warn:#d98a00;--bad:#d64545}
+:root{--font:"Inter","Segoe UI Variable Text","Segoe UI",Roboto,system-ui,-apple-system,sans-serif;--hf:var(--font);--r:14px;--on:#fff;--bg:#f4f5f7;--card:#fff;--ink:#1d2330;--mute:#6b7385;--line:#dfe3ea;--acc:#2f5bea;--ok:#1f9d55;--warn:#d98a00;--bad:#d64545}
 @media(prefers-color-scheme:dark){:root{--bg:#14171f;--card:#1e2330;--ink:#e8ebf2;--mute:#9aa3b8;--line:#2d3446;--acc:#6c8cff}}
 *{box-sizing:border-box}
-body{margin:0;font-family:Segoe UI,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink)}
 header{display:flex;gap:6px;align-items:center;padding:12px 20px;background:var(--card);border-bottom:1px solid var(--line);flex-wrap:wrap}
 header h1{font-size:18px;margin:0 16px 0 0}
 nav button{border:0;background:none;padding:8px 14px;border-radius:8px;font:inherit;color:var(--mute);cursor:pointer}
-nav button.on{background:var(--acc);color:#fff}
+nav button.on{background:var(--acc);color:var(--on)}
 main{max-width:720px;margin:0 auto;padding:24px 16px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 24px;text-align:center;min-height:280px;display:flex;flex-direction:column;justify-content:center;gap:12px}
 .cat{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
-.word{font-size:36px;font-weight:600}
+.word{font-size:36px;font-weight:600;letter-spacing:-.01em}
 .ans{font-size:26px;color:var(--acc);font-weight:600}
 .ex{font-size:16px;color:var(--mute);font-style:italic}
 .counts{display:flex;gap:16px;justify-content:center;margin-bottom:14px;font-size:14px}
 .counts b{padding:2px 8px;border-radius:6px}
-.n{background:#2f5bea22;color:var(--acc)}.l{background:#d98a0022;color:var(--warn)}.r{background:#1f9d5522;color:var(--ok)}
+.n{background:color-mix(in srgb,var(--acc) 16%,transparent);color:var(--acc)}.l{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}.r{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
 .btns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
 button.g,button.show,button.ghost{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:12px 6px;border-radius:10px;cursor:pointer}
 button.g small{display:block;color:var(--mute);font-size:12px;margin-top:2px}
 button.g:hover,button.ghost:hover{border-color:var(--acc)}
-button.show{width:100%;margin-top:14px;background:var(--acc);color:#fff;border:0;font-size:16px;padding:14px}
+button.show{width:100%;margin-top:14px;background:var(--acc);color:var(--on);border:0;font-size:16px;padding:14px}
 .g1{border-color:var(--bad)!important}.g2{border-color:var(--warn)!important}.g3{border-color:var(--ok)!important}.g4{border-color:var(--acc)!important}
 .sp{border:0;background:none;font-size:22px;cursor:pointer}
 .hint{font-size:12px;color:var(--mute);text-align:center;margin-top:10px}
@@ -53,7 +53,7 @@ body{-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-
 [data-theme=dark]{--bg:#14171f;--card:#1e2330;--ink:#e8ebf2;--mute:#9aa3b8;--line:#2d3446;--acc:#6c8cff}
 [data-theme=light]{--bg:#f4f5f7;--card:#fff;--ink:#1d2330;--mute:#6b7385;--line:#dfe3ea;--acc:#2f5bea}
 button.lnk{border:0;background:none;color:var(--acc);font:inherit;font-size:13px;cursor:pointer;padding:2px 4px;text-decoration:underline}
-.note{background:#d98a0022;border:1px solid var(--warn);border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:12px}
+.note{background:color-mix(in srgb,var(--warn) 14%,transparent);border:1px solid var(--warn);border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:12px}
 .ok{color:var(--ok);font-weight:600}.bad{color:var(--bad);font-weight:600}
 .btns2{display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-top:14px}.btns2 .show{margin-top:0}
 button.g.sug{outline:3px solid var(--acc);outline-offset:1px}
@@ -85,13 +85,13 @@ nav button i{font-style:normal;display:none}
  header h1{margin:0;font-size:17px;text-align:center}
  nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(5,1fr);background:var(--card);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
  .kb{display:none}
- .row:has(select),.row:has(input:not([type=checkbox]):not([type=radio])){flex-direction:column;align-items:stretch;gap:4px}
- .row:has(select) select,.row:has(input:not([type=checkbox])) input{width:100%}
+ details .row:has(select),details .row:has(input:not([type=checkbox]):not([type=radio])){flex-direction:column;align-items:stretch;gap:4px}
+ details .row:has(select) select,details .row:has(input:not([type=checkbox])) input{width:100%}
  nav button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;font-size:11px;border-radius:12px;min-width:0}
  nav button i{display:block;font-size:20px;line-height:1.1}
  nav button span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
  nav button.on{background:none;color:var(--acc);font-weight:600}
- nav button.on i{background:var(--acc)22;border-radius:12px;padding:0 14px}
+ nav button.on i{background:color-mix(in srgb,var(--acc) 18%,transparent);border-radius:12px;padding:0 14px}
  main{padding:14px 12px calc(96px + env(safe-area-inset-bottom))}
  #toast{bottom:calc(88px + env(safe-area-inset-bottom))}
  .card{padding:34px 14px 22px}
@@ -102,6 +102,74 @@ nav button i{font-style:normal;display:none}
  table{font-size:13px}
  .chart small{font-size:9px}
 }
+/* ---- Einstellungen: Akkordeon ---- */
+details.box{padding:0;overflow:hidden}
+details.box>summary{list-style:none;display:flex;align-items:center;gap:12px;padding:12px 16px;min-height:60px;cursor:pointer;-webkit-user-select:none;user-select:none}
+details.box>summary::-webkit-details-marker{display:none}
+.si{width:38px;height:38px;flex:none;display:grid;place-items:center;font-size:20px;border-radius:calc(var(--r) - 4px);background:color-mix(in srgb,var(--acc) 14%,transparent)}
+.st{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.st b{font-size:16px;font-family:var(--hf)}
+.st small{color:var(--mute);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chev{color:var(--mute);font-size:22px;transition:transform .2s;line-height:1}
+details[open]>summary .chev{transform:rotate(90deg)}
+details[open]>summary{border-bottom:1px solid var(--line)}
+details.box>.in{padding:12px 16px 16px;animation:dn .18s ease-out}
+@keyframes dn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+/* ---- Theme-Kacheln ---- */
+.themes{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:4px 0 14px}
+.tile{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px;text-align:left;font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.tile.sel{border-color:var(--acc);box-shadow:0 0 0 2px color-mix(in srgb,var(--acc) 30%,transparent)}
+.tile .pv{height:46px;border-radius:8px;display:flex;align-items:flex-end;gap:5px;padding:6px;border:1px solid #0002}
+.tile .pv i{display:block;height:100%;border-radius:4px}
+.tile b{font-size:14px}.tile small{color:var(--mute);font-size:11.5px;line-height:1.25}
+/* ---- Themes (matte Paletten) ---- */
+[data-theme=hyrule]{color-scheme:dark;--font:"Avenir Next","Segoe UI Variable Text","Segoe UI",Roboto,system-ui,sans-serif;--hf:"Cormorant Garamond","Palatino Linotype",Palatino,"Iowan Old Style","Noto Serif",Georgia,serif;--r:10px;--bg:#1e2a23;--card:#e3dac0;--ink:#3b3223;--mute:#7b6f55;--line:#cfc4a4;--acc:#58795c;--ok:#58795c;--warn:#a9803a;--bad:#9c4a42;--on:#f4eed8}
+[data-theme=hyrule] body{background:var(--bg)}
+[data-theme=hyrule] header,[data-theme=hyrule] nav{background:#2b3a31;color:#d9cb94;border-color:#4a5c4f}
+[data-theme=hyrule] header h1{color:#d9cb94;font-family:var(--hf);font-size:21px;letter-spacing:.04em;font-weight:600}
+[data-theme=hyrule] main{color:#cfc7a8}[data-theme=hyrule] main>.hint{color:#a8a283}
+[data-theme=hyrule] .card,[data-theme=hyrule] .box,[data-theme=hyrule] .tile{color:var(--ink);border:1px solid #b9a56a;box-shadow:0 2px 10px #0004}
+[data-theme=hyrule] .word{font-family:var(--hf);font-size:42px;font-weight:600}
+[data-theme=hyrule] .ans{font-family:var(--hf);font-size:30px;font-weight:600}
+[data-theme=hyrule] .ex{font-family:var(--hf);font-size:19px}
+[data-theme=hyrule] .st b,[data-theme=hyrule] .box h3{font-family:var(--hf);font-size:19px;font-weight:600}
+[data-theme=hyrule] .counts .n{color:#8fb597}[data-theme=hyrule] .counts .l{color:#d1ab62}[data-theme=hyrule] .counts .r{color:#a9c98b}
+[data-theme=hyrule] .box .hint,[data-theme=hyrule] .card .hint{color:var(--mute)}
+[data-theme=hyrule] nav button{color:#a8a283}[data-theme=hyrule] nav button.on{color:#e6d79c}
+[data-theme=hyrule] input,[data-theme=hyrule] select,[data-theme=hyrule] textarea{background:#f0e9d2;border-color:#bfae7a;color:var(--ink)}
+[data-theme=hyrule] button.g,[data-theme=hyrule] button.ghost{background:#efe8d0;border-color:#bfae7a}
+[data-theme=hyrule] #toast{background:#2b3a31;color:#e6d79c}
+[data-theme=gameboy]{color-scheme:light;--font:ui-monospace,"Cascadia Mono","Roboto Mono","SF Mono",Menlo,Consolas,monospace;--hf:var(--font);--r:6px;--bg:#b3bd98;--card:#d6dcb6;--ink:#2c3a23;--mute:#5d6b45;--line:#9aa67a;--acc:#8a4361;--ok:#47703a;--warn:#a2692a;--bad:#a8403f;--on:#f6f3e4}
+[data-theme=gameboy] body{background:var(--bg)}
+[data-theme=gameboy] header,[data-theme=gameboy] nav{background:#44557f;color:#eef0e4;border-color:#323f60}
+[data-theme=gameboy] header h1{color:#eef0e4;text-transform:uppercase;letter-spacing:.1em;font-size:15px}
+[data-theme=gameboy] nav button{color:#b4bfdb}[data-theme=gameboy] nav button.on{color:#f0d77a}
+[data-theme=gameboy] .card,[data-theme=gameboy] .box,[data-theme=gameboy] .tile{border:2px solid #2c3a23;box-shadow:3px 3px 0 #2c3a2399}
+[data-theme=gameboy] .word{text-transform:uppercase;letter-spacing:.03em;font-size:32px}
+[data-theme=gameboy] .ex{font-style:normal;font-size:14px}
+[data-theme=gameboy] button.g,[data-theme=gameboy] button.ghost,[data-theme=gameboy] input,[data-theme=gameboy] select,[data-theme=gameboy] textarea{background:#e6ebc8;border:2px solid #2c3a23;color:var(--ink)}
+[data-theme=gameboy] button.show{border:2px solid #2c3a23;box-shadow:3px 3px 0 #2c3a2399}
+[data-theme=gameboy] .si{background:#8a4361;color:#f6f3e4;border-radius:50%}
+[data-theme=gameboy] .bar{background:#a2ad82}
+[data-theme=gameboy] #toast{background:#2c3a23;color:#d6dcb6}
+[data-theme=w40k]{color-scheme:dark;--font:"Segoe UI Variable Text","Segoe UI",Roboto,system-ui,sans-serif;--hf:Bahnschrift,"Barlow Condensed","Roboto Condensed","Arial Narrow",sans-serif-condensed,sans-serif;--r:3px;--bg:#131314;--card:#1c1c1e;--ink:#d8d0b8;--mute:#8f876f;--line:#33312c;--acc:#b39a56;--ok:#7a9650;--warn:#c28a45;--bad:#b0483c;--on:#17140c}
+[data-theme=w40k] body{background:var(--bg)}
+[data-theme=w40k] header,[data-theme=w40k] nav{background:#1a1a1b;border-color:#6b2a24}
+[data-theme=w40k] header{border-bottom:2px solid #6b2a24}
+[data-theme=w40k] nav{border-top:2px solid #6b2a24}
+[data-theme=w40k] header h1{color:#b39a56;text-transform:uppercase;letter-spacing:.2em;font-family:var(--hf);font-size:16px;font-weight:600}
+[data-theme=w40k] nav button.on{color:#b39a56}
+[data-theme=w40k] .card,[data-theme=w40k] .box,[data-theme=w40k] .tile{border:1px solid #3d3a31;border-top:2px solid #6b2a24;box-shadow:0 4px 14px #0007}
+[data-theme=w40k] .word,[data-theme=w40k] .st b,[data-theme=w40k] .box h3{text-transform:uppercase;letter-spacing:.07em;font-family:var(--hf);font-weight:600}
+[data-theme=w40k] .word{font-size:38px}
+[data-theme=w40k] .cat{color:#c06a5c;font-weight:600}
+[data-theme=w40k] button.show{background:#6b2a24;color:#eadfc0;border:1px solid #8f7a40;text-transform:uppercase;letter-spacing:.12em;font-family:var(--hf)}
+[data-theme=w40k] button.g,[data-theme=w40k] button.ghost{background:#161617;border-color:#3d3a31;text-transform:uppercase;letter-spacing:.05em;font-family:var(--hf)}
+[data-theme=w40k] input,[data-theme=w40k] select,[data-theme=w40k] textarea{background:#121213;border-color:#3d3a31;color:var(--ink)}
+[data-theme=w40k] .si{background:#6b2a24;color:#eadfc0;border-radius:2px}
+[data-theme=w40k] #toast{background:#6b2a24;color:#eadfc0}
+[data-theme=hyrule] .tile,[data-theme=gameboy] .tile,[data-theme=w40k] .tile{box-shadow:none}
+@media(max-width:700px){[data-theme=w40k] header h1{font-size:14px}[data-theme=gameboy] nav button{font-size:9.5px;letter-spacing:-.02em}[data-theme=hyrule] nav button{font-size:10.5px}}
 </style>
 </head>
 <body>
@@ -5079,7 +5147,7 @@ you|du, Sie, ihr; dich, dir, euch|Are you coming to the meeting this afternoon?|
 young|jung; Junge (Tiere)|When I was young, I lived on a farm with my grandparents.|adj., n.
 your|dein(e), Ihr(e), euer|Is this your bag, or does it belong to someone else?|det.
 yourself|dich (selbst), dir (selbst), sich (selbst)|Be careful with that knife, or you might hurt yourself.|pron.`;
-const VERSION='2.4';
+const VERSION='2.7';
 const KEY='vokabeltrainer_v2';
 const MIN=60000, DAY=86400000, STEPS=[1,10], RELEARN=[10];
 const LEVELS=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];
@@ -5104,7 +5172,15 @@ function load(){let st;try{st=JSON.parse(localStorage.getItem(KEY))}catch(e){}
  S.day=Object.assign({d:'',n:0,r:0},S.day||{});applyLook()}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function dayc(){if(S.day.d!==today())S.day={d:today(),n:0,r:0};return S.day}
+const THEMES=[
+ {id:'auto',n:'Standard',d:'Passt sich dem Gerät an (hell/dunkel)',c:['#f4f5f7','#fff','#2f5bea'],top:'#2f5bea'},
+ {id:'light',n:'Hell',d:'Immer hell',c:['#f4f5f7','#fff','#2f5bea'],top:'#ffffff'},
+ {id:'dark',n:'Dunkel',d:'Immer dunkel',c:['#14171f','#1e2330','#6c8cff'],top:'#1e2330'},
+ {id:'hyrule',n:'Hyrule',d:'Mattes Pergament, Waldgrün und Gold – Ocarina-of-Time-Stil',c:['#1e2a23','#e3dac0','#b9a56a'],top:'#2b3a31'},
+ {id:'gameboy',n:'Game Boy',d:'Gedecktes Retro-Grün, Monospace und Pflaume-Akzent',c:['#b3bd98','#d6dcb6','#8a4361'],top:'#44557f'},
+ {id:'w40k',n:'Imperium',d:'Düster: Schwarz, Gold und Blutrot – 40K-Stil',c:['#131314','#1c1c1e','#b39a56'],top:'#1a1a1b'}];
 function applyLook(){const r=document.documentElement;if(S.set.theme==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',S.set.theme);
+ try{const m=document.querySelector&&document.querySelector('meta[name=theme-color]');if(m){const t=THEMES.find(x=>x.id===S.set.theme);m.content=t&&t.top||'#2f5bea'}}catch(e){}
  const m=document.getElementById('app');if(m)m.style.zoom=S.set.font}
 // ---------- SM-2 Scheduler (Anki-Stil) ----------
 function fmt(ms){const m=ms/MIN;if(m<60)return Math.max(1,Math.round(m))+' Min';const h=m/60;if(h<24)return Math.round(h)+' Std';
@@ -5289,52 +5365,64 @@ function rBrowse(){const hid=CARDS.filter(c=>S.cards[c.id]&&S.cards[c.id].state=
  const ua=document.getElementById('unall');if(ua)ua.onclick=()=>{if(confirm(hid+' Karten wieder einblenden?')){CARDS.forEach(c=>unhideCard(c.id));save();toast('✓ Alle eingeblendet');rBrowse()}};
  f()}
 function opt(v,cur,label){return `<option value="${v}"${String(cur)===String(v)?' selected':''}>${label}</option>`}
+let setOpen=null;
 function rSet(){const T=S.set;
  const catCounts={};CARDS.forEach(c=>{catCounts[c.cat]=(catCounts[c.cat]||0)+1});
  const cats=LEVELS.filter(l=>catCounts[l]).concat(getCats().filter(c=>!LEVELS.includes(c)));
- app.innerHTML=`<div class="hint" style="text-align:left;margin:0 0 10px">Änderungen werden automatisch gespeichert.</div><div class="box"><h3>Lernen</h3>
- <div class="row"><span>Neue Wörter pro Tag</span><input type="number" id="npd" min="1" max="200" value="${T.newPerDay}" style="width:90px"></div>
+ const th=THEMES.find(x=>x.id===T.theme)||THEMES[0];
+ const nOwn=Object.values(S.sent||{}).reduce((a,b)=>a+b.length,0);
+ const sec=(id,ic,title,sub,body)=>`<details class="box" data-sec="${id}"${setOpen===id?' open':''}><summary><span class="si">${ic}</span><span class="st"><b>${title}</b><small id="sub-${id}">${sub}</small></span><span class="chev">›</span></summary><div class="in">${body}</div></details>`;
+ const lvlSub=()=>`${cats.length-T.off.filter(x=>cats.includes(x)).length} von ${cats.length} Stufen aktiv`;
+ app.innerHTML=`<div class="hint" style="text-align:left;margin:0 0 10px">Tippe auf einen Bereich zum Öffnen. Änderungen werden automatisch gespeichert.</div>`+
+ sec('look','🎨','Darstellung',esc(th.n)+' · Schrift '+({0.9:'klein',1:'normal',1.15:'groß',1.3:'sehr groß'}[T.font]||'normal'),
+ `<div class="themes">${THEMES.map(t=>`<button class="tile${t.id===T.theme?' sel':''}" data-th="${t.id}"><span class="pv" style="background:${t.c[0]}"><i style="flex:2;background:${t.c[1]}"></i><i style="flex:1;background:${t.c[2]}"></i></span><b>${esc(t.n)}</b><small>${esc(t.d)}</small></button>`).join('')}</div>
+ <div class="row"><span>Schriftgröße</span><select id="fnt">${opt(0.9,T.font,'Klein')}${opt(1,T.font,'Normal')}${opt(1.15,T.font,'Groß')}${opt(1.3,T.font,'Sehr groß')}</select></div>`)+
+ sec('learn','🎯','Lernen',`${T.newPerDay} neue Wörter/Tag · max. ${T.revLimit||'∞'} Wiederholungen`,
+ `<div class="row"><span>Neue Wörter pro Tag</span><input type="number" id="npd" min="1" max="200" value="${T.newPerDay}" style="width:90px"></div>
  <div class="row"><span>Max. Wiederholungen pro Tag <small>(0 = unbegrenzt)</small></span><input type="number" id="rl" min="0" max="2000" value="${T.revLimit}" style="width:90px"></div>
  <div class="row"><span>Reihenfolge neuer Wörter</span><select id="ord">${opt('level',T.order,'Nach Niveau (B2 zuerst)')}${opt('alpha',T.order,'Alphabetisch')}${opt('random',T.order,'Zufällig')}</select></div>
  <div class="row"><span>Problemwort ab … Fehlern</span><select id="lch">${opt(3,T.leech,'3')}${opt(4,T.leech,'4')}${opt(5,T.leech,'5')}${opt(8,T.leech,'8')}</select></div>
- <div class="row"><span>Wiederholungsabstände</span><select id="ivl">${opt(0.8,T.ivlMod,'Kürzer (öfter wiederholen)')}${opt(1,T.ivlMod,'Normal')}${opt(1.25,T.ivlMod,'Länger (weniger Wiederholungen)')}</select></div></div>
- <div class="box"><h3>Welche Wörter lernen?</h3><div class="hint" style="text-align:left;margin:0 0 6px">Gilt für neue Karten. Bereits begonnene Karten werden weiter wiederholt.</div>
- ${cats.map((c,i)=>`<label class="row"><input type="checkbox" data-cat="${i}" ${T.off.includes(c)?'':'checked'}> ${esc(c)} <span class="tag">${catCounts[c]}</span></label>`).join('')}</div>
- <div class="box"><h3>Abfrage</h3>
- <div class="row"><span>Richtung</span><select id="dir">${opt('en-de',T.dir,'Englisch → Deutsch')}${opt('de-en',T.dir,'Deutsch → Englisch')}${opt('mix',T.dir,'Gemischt')}</select></div>
+ <div class="row"><span>Wiederholungsabstände</span><select id="ivl">${opt(0.8,T.ivlMod,'Kürzer (öfter wiederholen)')}${opt(1,T.ivlMod,'Normal')}${opt(1.25,T.ivlMod,'Länger (weniger Wiederholungen)')}</select></div>`)+
+ sec('words','📚','Welche Wörter lernen?',lvlSub(),
+ `<div class="hint" style="text-align:left;margin:0 0 6px">Gilt für neue Karten. Bereits begonnene Karten werden weiter wiederholt.</div>
+ ${cats.map((c,i)=>`<label class="row"><input type="checkbox" data-cat="${i}" ${T.off.includes(c)?'':'checked'}> ${esc(c)} <span class="tag">${catCounts[c]}</span></label>`).join('')}`)+
+ sec('quiz','🔊','Abfrage & Aussprache',({'en-de':'Englisch → Deutsch','de-en':'Deutsch → Englisch',mix:'Gemischt'}[T.dir]||'')+' · '+(T.accent==='en-US'?'Amerikanisch':'Britisch')+(T.tts?' · Vorlesen an':''),
+ `<div class="row"><span>Richtung</span><select id="dir">${opt('en-de',T.dir,'Englisch → Deutsch')}${opt('de-en',T.dir,'Deutsch → Englisch')}${opt('mix',T.dir,'Gemischt')}</select></div>
  <label class="row"><input type="checkbox" id="typ" ${T.typing?'checked':''}> Bei Deutsch → Englisch das Wort eintippen (übt Rechtschreibung)</label>
  <label class="row"><input type="checkbox" id="tts" ${T.tts?'checked':''}> Aussprache automatisch vorlesen</label>
  <div class="row"><span>Akzent</span><select id="acc">${opt('en-GB',T.accent,'Britisch')}${opt('en-US',T.accent,'Amerikanisch')}</select></div>
- <div class="row"><span>Sprechtempo</span><select id="rate">${opt(0.7,T.rate,'Langsam')}${opt(0.85,T.rate,'Etwas langsamer')}${opt(1,T.rate,'Normal')}${opt(1.15,T.rate,'Schneller')}</select> <button class="ghost g" id="test" style="padding:6px 12px">▶ Test</button></div></div>
- <div class="box"><h3>Darstellung</h3>
- <div class="row"><span>Design</span><select id="thm">${opt('auto',T.theme,'Automatisch (Gerät)')}${opt('light',T.theme,'Hell')}${opt('dark',T.theme,'Dunkel')}</select></div>
- <div class="row"><span>Schriftgröße</span><select id="fnt">${opt(0.9,T.font,'Klein')}${opt(1,T.font,'Normal')}${opt(1.15,T.font,'Groß')}${opt(1.3,T.font,'Sehr groß')}</select></div></div>
- <div class="box"><h3>Lernstand sichern</h3><div class="hint" style="text-align:left;margin:0 0 6px">Der Fortschritt liegt nur auf diesem Gerät. Sichere ihn regelmäßig.</div>
+ <div class="row"><span>Sprechtempo</span><select id="rate">${opt(0.7,T.rate,'Langsam')}${opt(0.85,T.rate,'Etwas langsamer')}${opt(1,T.rate,'Normal')}${opt(1.15,T.rate,'Schneller')}</select> <button class="ghost g" id="test" style="padding:6px 12px">▶ Test</button></div>`)+
+ sec('backup','💾','Lernstand sichern','Letzte Sicherung: '+(S.lastExport?new Date(S.lastExport).toLocaleDateString('de-DE'):'noch nie'),
+ `<div class="hint" style="text-align:left;margin:0 0 6px">Der Fortschritt liegt nur auf diesem Gerät. Sichere ihn regelmäßig.</div>
  <label class="row"><input type="checkbox" id="bkp" ${T.backup?'checked':''}> Erinnerung, wenn die letzte Sicherung über 7 Tage her ist</label>
  <div class="row"><button class="ghost g" id="exp">Exportieren</button>${navigator.canShare?'<button class="ghost g" id="shr">Teilen…</button>':''}<button class="ghost g" id="imp">Importieren</button><input type="file" id="file" accept=".json" style="display:none"></div>
- <div class="hint" style="text-align:left">Letzte Sicherung: ${S.lastExport?new Date(S.lastExport).toLocaleString('de-DE'):'noch nie'}</div></div>
- <div class="box"><h3>Meine Sätze</h3><div class="hint" style="text-align:left;margin:0 0 6px">Sätze, die du auf den Karten geschrieben hast (${Object.values(S.sent||{}).reduce((a,b)=>a+b.length,0)} gespeichert). Exportiere sie als Textdatei und lass sie dir von Claude korrigieren.</div>
- <div class="row"><button class="ghost g" id="sexp">Sätze exportieren</button><button class="ghost g" id="sclr" style="color:var(--bad)">Sätze löschen</button></div></div>
- <div class="box"><h3>Eigene Wörter hinzufügen</h3><div class="hint" style="text-align:left;margin:0 0 6px">Format pro Zeile: englisch|deutsch|Beispielsatz</div>
- <textarea id="own" rows="3" style="width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)"></textarea><div class="row"><button class="ghost g" id="addown">Hinzufügen</button></div></div>
- <div class="box"><h3>App</h3><div class="row"><span>Version ${VERSION}</span><button class="ghost g" id="upd">Nach Update suchen</button></div>
- <div class="row"><button class="ghost g" id="rst" style="color:var(--bad)">Alles zurücksetzen</button></div></div>
- <button class="show" id="done">✓ Fertig – zurück zum Lernen</button>`;
+ <div class="hint" style="text-align:left">Letzte Sicherung: ${S.lastExport?new Date(S.lastExport).toLocaleString('de-DE'):'noch nie'}</div>`)+
+ sec('sent','✍️','Meine Sätze',nOwn+' gespeichert',
+ `<div class="hint" style="text-align:left;margin:0 0 6px">Sätze, die du auf den Karten geschrieben hast. Exportiere sie als Textdatei und lass sie dir von Claude korrigieren.</div>
+ <div class="row"><button class="ghost g" id="sexp">Sätze exportieren</button><button class="ghost g" id="sclr" style="color:var(--bad)">Sätze löschen</button></div>`)+
+ sec('own','➕','Eigene Wörter hinzufügen','Format: englisch|deutsch|Beispielsatz',
+ `<div class="hint" style="text-align:left;margin:0 0 6px">Format pro Zeile: englisch|deutsch|Beispielsatz</div>
+ <textarea id="own" rows="3" style="width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)"></textarea><div class="row"><button class="ghost g" id="addown">Hinzufügen</button></div>`)+
+ sec('app','ℹ️','App','Version '+VERSION,
+ `<div class="row"><span>Version ${VERSION}</span><button class="ghost g" id="upd">Nach Update suchen</button></div>
+ <div class="row"><button class="ghost g" id="rst" style="color:var(--bad)">Alles zurücksetzen</button></div>`)+
+ `<button class="show" id="done">✓ Fertig – zurück zum Lernen</button>`;
+ document.querySelectorAll('details[data-sec]').forEach(d=>d.addEventListener('toggle',()=>{if(d.open){setOpen=d.dataset.sec;document.querySelectorAll('details[data-sec]').forEach(o=>{if(o!==d)o.open=false})}else if(setOpen===d.dataset.sec)setOpen=null}));
  const $=id=>document.getElementById(id);const sv=()=>{save();toast('✓ Gespeichert')};
- $('npd').oninput=e=>{const v=+e.target.value;if(v>=1){T.newPerDay=v;sv()}};
- $('rl').oninput=e=>{const v=+e.target.value;if(e.target.value!==''&&v>=0){T.revLimit=v;sv()}};
+ $('npd').oninput=e=>{const v=+e.target.value;if(v>=1){T.newPerDay=v;sv();$('sub-learn').textContent=`${T.newPerDay} neue Wörter/Tag · max. ${T.revLimit||'∞'} Wiederholungen`}};
+ $('rl').oninput=e=>{const v=+e.target.value;if(e.target.value!==''&&v>=0){T.revLimit=v;sv();$('sub-learn').textContent=`${T.newPerDay} neue Wörter/Tag · max. ${T.revLimit||'∞'} Wiederholungen`}};
  $('lch').onchange=e=>{T.leech=+e.target.value;sv()};
  $('ord').onchange=e=>{T.order=e.target.value;sv()};
  $('ivl').onchange=e=>{T.ivlMod=+e.target.value;sv()};
- document.querySelectorAll('[data-cat]').forEach(cb=>cb.onchange=()=>{const c=cats[+cb.dataset.cat];T.off=T.off.filter(x=>x!==c);if(!cb.checked)T.off.push(c);sv()});
+ document.querySelectorAll('[data-cat]').forEach(cb=>cb.onchange=()=>{const c=cats[+cb.dataset.cat];T.off=T.off.filter(x=>x!==c);if(!cb.checked)T.off.push(c);sv();$('sub-words').textContent=lvlSub()});
  $('dir').onchange=e=>{T.dir=e.target.value;sv()};
  $('typ').onchange=e=>{T.typing=e.target.checked;sv()};
  $('tts').onchange=e=>{T.tts=e.target.checked;sv()};
  $('acc').onchange=e=>{T.accent=e.target.value;sv()};
  $('rate').onchange=e=>{T.rate=+e.target.value;sv()};
  $('test').onclick=()=>{const w=T.tts;T.tts=true;speak('environment, commute, productive');T.tts=w};
- $('thm').onchange=e=>{T.theme=e.target.value;sv();applyLook()};
- $('fnt').onchange=e=>{T.font=+e.target.value;sv();applyLook()};
+ document.querySelectorAll('[data-th]').forEach(t=>t.onclick=()=>{T.theme=t.dataset.th;sv();applyLook();document.querySelectorAll('[data-th]').forEach(x=>x.classList.toggle('sel',x===t));const th2=THEMES.find(x=>x.id===T.theme);$('sub-look').textContent=th2.n+' · Schrift '+({0.9:'klein',1:'normal',1.15:'groß',1.3:'sehr groß'}[T.font]||'normal')});
+ $('fnt').onchange=e=>{T.font=+e.target.value;sv();applyLook();const t2=THEMES.find(x=>x.id===T.theme)||THEMES[0];$('sub-look').textContent=t2.n+' · Schrift '+({0.9:'klein',1:'normal',1.15:'groß',1.3:'sehr groß'}[T.font]||'normal')};
  $('bkp').onchange=e=>{T.backup=e.target.checked;sv()};
  $('exp').onclick=()=>{exportData(false);rSet()};
  const sh=$('shr');if(sh)sh.onclick=()=>{exportData(true);rSet()};
@@ -5347,6 +5435,7 @@ function rSet(){const T=S.set;
  $('sexp').onclick=()=>{const L=[];for(const id in (S.sent||{}))S.sent[id].forEach(s=>L.push(id+' | '+s.t));if(!L.length){toast('Noch keine Sätze');return}const b=new Blob([L.join('\n')],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='meine-saetze-'+today()+'.txt';a.click()};
  $('sclr').onclick=()=>{if(confirm('Alle gespeicherten Sätze löschen?')){S.sent={};save();rSet()}};
  $('upd').onclick=async()=>{try{if('serviceWorker' in navigator){const r=await navigator.serviceWorker.getRegistration();if(r)await r.update()}}catch(e){}location.reload()}}
+
 load();
 (S.own||[]).forEach(l=>{const p=l.split('|');addCard(p[0],p[1],p[2],'Eigene Wörter')});
 render();
