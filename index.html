@@ -208,7 +208,6 @@ html[data-theme=gameboy]{background:linear-gradient(45deg,#0000000d 25%,transpar
 html[data-theme=w40k]{background:repeating-linear-gradient(0deg,#ffffff06 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,#ffffff03 0 1px,transparent 1px 48px),radial-gradient(ellipse at 50% 0,#1d1d20,#101011 70%)}
 [data-theme=w40k] body{background:transparent}
 [data-theme=w40k] header{position:relative}
-[data-theme=w40k] header::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:6px;background:repeating-linear-gradient(-45deg,#b39a56 0 8px,#131314 8px 16px);pointer-events:none}
 [data-theme=w40k] header h1::before{content:"// ";color:#a8392e}
 [data-theme=w40k] .card,[data-theme=w40k] .box{border-radius:0;border:0;clip-path:polygon(16px 0,calc(100% - 16px) 0,100% 16px,100% calc(100% - 16px),calc(100% - 16px) 100%,16px 100%,0 calc(100% - 16px),0 16px);background:linear-gradient(135deg,#b39a56 0 2px,transparent 2px) top left/18px 18px no-repeat,linear-gradient(225deg,#b39a56 0 2px,transparent 2px) top right/18px 18px no-repeat,linear-gradient(45deg,#b39a56 0 2px,transparent 2px) bottom left/18px 18px no-repeat,linear-gradient(315deg,#b39a56 0 2px,transparent 2px) bottom right/18px 18px no-repeat,linear-gradient(#6b2a24,#6b2a24) top/100% 3px no-repeat,#212124;box-shadow:inset 0 0 0 1px #4a4536}
 [data-theme=w40k] .card{padding-top:36px}
@@ -222,7 +221,6 @@ html[data-theme=w40k]{background:repeating-linear-gradient(0deg,#ffffff06 0 1px,
 [data-theme=w40k] .bar i{background:repeating-linear-gradient(90deg,#b39a56 0 8px,transparent 8px 10px)}
 [data-theme=w40k] .si{clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);border-radius:0}
 [data-theme=w40k] input,[data-theme=w40k] select,[data-theme=w40k] textarea{border-radius:0;font-family:ui-monospace,Consolas,monospace}
-@media(max-width:700px){[data-theme=w40k] nav{border-top:0}[data-theme=w40k] nav::before{content:"";position:absolute;left:0;right:0;top:-6px;height:6px;background:repeating-linear-gradient(-45deg,#b39a56 0 8px,#131314 8px 16px)}}
 /* --- Klemmbaustein: bunt, Noppen --- */
 [data-theme=bricks]{color-scheme:light;--font:"Nunito","Varela Round","Arial Rounded MT Bold",ui-rounded,"Trebuchet MS","Segoe UI",system-ui,sans-serif;--hf:var(--font);--r:12px;--bg:#2f6fcf;--card:#ffffff;--ink:#1b1b1b;--mute:#555b66;--line:#d6d9de;--acc:#0b57c7;--ok:#1f8a3d;--warn:#d96e00;--bad:#d01012;--on:#ffffff}
 html[data-theme=bricks]{background:radial-gradient(circle,#ffffff2e 0 5px,transparent 5.5px) 0 0/30px 30px,#2f6fcf}
@@ -261,6 +259,90 @@ html[data-theme=bricks]{background:radial-gradient(circle,#ffffff2e 0 5px,transp
 [data-theme=bricks] nav button.on{background:#d01012;color:#fff}
 [data-theme=bricks] #toast{background:#1b1b1b;color:#ffd500}
 @media(max-width:700px){[data-theme=bricks] nav{background:#d01012;border-top:4px solid #1b1b1b}[data-theme=bricks] nav button{color:#fff}[data-theme=bricks] nav button.on{background:none;color:#ffd500}[data-theme=bricks] nav button.on i{background:#ffffff33}}
+/* ================= Feinschliff ================= */
+/* --- Imperium: Servoschädel-frei, rein technisch: Nieten, Datenfelder, Klammern --- */
+[data-theme=w40k] header{border-bottom:1px solid #6b2a24;box-shadow:0 1px 0 #b39a5655,0 3px 0 #0008}
+[data-theme=w40k] header h1::after{content:" _";color:#b39a56;animation:blink 1.1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+[data-theme=w40k] .card{background:radial-gradient(circle,#8a7a4a 0 2px,#3a352a 2.5px,transparent 3.5px) 22px 12px/8px 8px no-repeat,radial-gradient(circle,#8a7a4a 0 2px,#3a352a 2.5px,transparent 3.5px) right 22px top 12px/8px 8px no-repeat,radial-gradient(circle,#8a7a4a 0 2px,#3a352a 2.5px,transparent 3.5px) 22px bottom 12px/8px 8px no-repeat,radial-gradient(circle,#8a7a4a 0 2px,#3a352a 2.5px,transparent 3.5px) right 22px bottom 12px/8px 8px no-repeat,linear-gradient(135deg,#b39a56 0 2px,transparent 2px) top left/18px 18px no-repeat,linear-gradient(225deg,#b39a56 0 2px,transparent 2px) top right/18px 18px no-repeat,linear-gradient(45deg,#b39a56 0 2px,transparent 2px) bottom left/18px 18px no-repeat,linear-gradient(315deg,#b39a56 0 2px,transparent 2px) bottom right/18px 18px no-repeat,linear-gradient(#6b2a24,#6b2a24) top/100% 3px no-repeat,#212124}
+[data-theme=w40k] .counts b::before{content:"[ ";color:#6f6650;font-weight:400}[data-theme=w40k] .counts b::after{content:" ]";color:#6f6650;font-weight:400}
+[data-theme=w40k] .counts b{background:none!important;padding:2px 2px}
+[data-theme=w40k] button.g,[data-theme=w40k] button.ghost{border-left:3px solid #6b2a24}
+[data-theme=w40k] button.g.g3{border-left-color:#7a9650}[data-theme=w40k] button.g.g2{border-left-color:#c28a45}[data-theme=w40k] button.g.g4{border-left-color:#b39a56}
+[data-theme=w40k] .word::after{content:"";display:block;width:64px;height:2px;margin:10px auto 0;background:linear-gradient(90deg,transparent,#b39a56,transparent)}
+[data-theme=w40k] .ans{letter-spacing:.04em}
+[data-theme=w40k] .ex{border-left:2px solid #6b2a24;padding-left:12px;text-align:left;font-style:normal;font-family:ui-monospace,Consolas,"Cascadia Mono",monospace;font-size:14px}
+[data-theme=w40k] summary{background:linear-gradient(90deg,#6b2a2422,transparent 40%)}
+[data-theme=w40k] .chev{font-family:ui-monospace,Consolas,monospace}
+[data-theme=w40k] #toast{border-radius:0;letter-spacing:.1em;text-transform:uppercase;border:1px solid #b39a56}
+/* --- Hyrule: Rubine, Magie-Leiste, Glühwürmchen --- */
+html[data-theme=hyrule]{background:radial-gradient(circle at 14% 24%,#f4f6a0cc 0 1.5px,#f4f6a033 3px,transparent 9px),radial-gradient(circle at 82% 18%,#f4f6a0cc 0 1.5px,#f4f6a033 3px,transparent 9px),radial-gradient(circle at 70% 46%,#f4f6a0cc 0 1.5px,#f4f6a033 3px,transparent 9px),radial-gradient(circle at 22% 62%,#f4f6a0cc 0 1.5px,#f4f6a033 3px,transparent 9px),radial-gradient(circle at 90% 70%,#f4f6a0cc 0 1.5px,#f4f6a033 3px,transparent 9px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='90' viewBox='0 0 200 90'%3E%3Cg fill='%23224d35'%3E%3Cpolygon points='30%2C10 48%2C40 38%2C40 54%2C64 42%2C64 58%2C86 2%2C86 18%2C64 6%2C64 22%2C40 12%2C40'/%3E%3Cpolygon points='100%2C14 118%2C44 108%2C44 124%2C68 112%2C68 128%2C90 72%2C90 88%2C68 76%2C68 92%2C44 82%2C44'/%3E%3Cpolygon points='165%2C10 183%2C40 173%2C40 189%2C64 177%2C64 193%2C86 137%2C86 153%2C64 141%2C64 157%2C40 147%2C40'/%3E%3C/g%3E%3Cg fill='%231b4029'%3E%3Cpolygon points='65%2C14 83%2C44 73%2C44 89%2C68 77%2C68 93%2C90 37%2C90 53%2C68 41%2C68 57%2C44 47%2C44'/%3E%3Cpolygon points='135%2C14 153%2C44 143%2C44 159%2C68 147%2C68 163%2C90 107%2C90 123%2C68 111%2C68 127%2C44 117%2C44'/%3E%3C/g%3E%3C/svg%3E") repeat-x left bottom 64px/200px 90px fixed,radial-gradient(ellipse at 50% 0,#245238 0,#1a3626 55%,#13271c 100%) fixed}
+[data-theme=hyrule] .counts b{clip-path:polygon(50% 0,100% 28%,100% 72%,50% 100%,0 72%,0 28%);padding:5px 14px;border-radius:0;color:#fff!important;font-weight:700;text-shadow:0 1px 0 #0006}
+[data-theme=hyrule] .counts .n{background:linear-gradient(135deg,#6fd08a,#2f8f4f)!important}
+[data-theme=hyrule] .counts .l{background:linear-gradient(135deg,#6aa8e8,#2f62b5)!important}
+[data-theme=hyrule] .counts .r{background:linear-gradient(135deg,#ee7a6a,#b02f26)!important}
+[data-theme=hyrule] .bar{height:14px;background:#0006;border:2px solid #c29a2e;border-radius:10px;overflow:hidden}
+[data-theme=hyrule] .bar i{background:linear-gradient(#7fdc92,#2f8f4f 55%,#1f6b3a)}
+[data-theme=hyrule] header h1::before{content:"✦ ";color:#c29a2e;font-size:.8em}[data-theme=hyrule] header h1::after{content:" ✦";color:#c29a2e;font-size:.8em}
+[data-theme=hyrule] .word::after{content:"";display:block;width:90px;height:8px;margin:8px auto 0;background:linear-gradient(90deg,transparent,#c29a2e 50%,transparent) center/100% 1.5px no-repeat,radial-gradient(circle,#c29a2e 0 3px,transparent 3.5px) center/8px 8px no-repeat}
+[data-theme=hyrule] .ex{border-top:1px dashed #c9b070;padding-top:10px;margin-top:2px}
+[data-theme=hyrule] .cat{font-variant:small-caps;letter-spacing:.14em;text-transform:none;color:#7a5a1e;font-weight:600;font-size:13px}
+[data-theme=hyrule] button.g{background:linear-gradient(#fbf3d6,#f1e5bb);box-shadow:0 2px 0 #b8964a}
+[data-theme=hyrule] button.g3{border-color:#2f8f4f}[data-theme=hyrule] button.g4{border-color:#2f62b5}
+[data-theme=hyrule] summary:hover{background:#c29a2e18}
+[data-theme=hyrule] .chev{color:#a8801e}
+[data-theme=hyrule] #toast{border:1px solid #c29a2e;border-radius:20px}
+/* --- Game Boy: LCD, Akku-LED, Lautsprecher --- */
+html[data-theme=gameboy]{background:repeating-linear-gradient(-60deg,#1c301426 0 5px,transparent 5px 15px) right 14px bottom 76px/84px 44px no-repeat,linear-gradient(45deg,#0000000d 25%,transparent 25%,transparent 75%,#0000000d 75%) 0 0/8px 8px,linear-gradient(45deg,#0000000d 25%,transparent 25%,transparent 75%,#0000000d 75%) 4px 4px/8px 8px,#9fb35c}
+[data-theme=gameboy] header{position:relative}
+[data-theme=gameboy] header::before{content:"";position:absolute;left:14px;top:50%;width:10px;height:10px;margin-top:-5px;background:#ff3b4a;box-shadow:0 0 0 2px #1a2c5e,0 0 10px 2px #ff3b4a99}
+[data-theme=gameboy] header::after{content:"DOT MATRIX";position:absolute;right:12px;top:50%;margin-top:-6px;font-size:8px;letter-spacing:.12em;color:#b9c6ee;line-height:12px}
+@media(max-width:700px){[data-theme=gameboy] header::after{display:none}}
+[data-theme=gameboy] .card{background:linear-gradient(#0000000a,#0000000a) 0 0/100% 4px,repeating-linear-gradient(0deg,#0000000a 0 2px,transparent 2px 4px),#cde08a;box-shadow:0 -3px 0 #1c3014,0 3px 0 #1c3014,-3px 0 0 #1c3014,3px 0 0 #1c3014,6px 9px 0 0 #1c301444,inset 0 0 0 4px #cde08a,inset 0 0 0 6px #1c301433}
+[data-theme=gameboy] .word::before{content:"▶ ";color:#a1255c;font-size:.6em;vertical-align:.15em}
+[data-theme=gameboy] .counts b{box-shadow:0 0 0 2px #1c3014;background:#e7f2b8!important;margin:2px}
+[data-theme=gameboy] .btns .g1::after,[data-theme=gameboy] .btns .g2::after,[data-theme=gameboy] .btns .g3::after,[data-theme=gameboy] .btns .g4::after{content:"";position:absolute;right:4px;top:4px;width:6px;height:6px}
+[data-theme=gameboy] .btns button.g{position:relative}
+[data-theme=gameboy] .g1::after{background:#b3282d}[data-theme=gameboy] .g2::after{background:#9c5a00}[data-theme=gameboy] .g3::after{background:#2b7a1f}[data-theme=gameboy] .g4::after{background:#35549f}
+[data-theme=gameboy] .cat{background:#1c3014;color:#cde08a;padding:2px 10px;align-self:center}
+[data-theme=gameboy] .ex{border-top:3px dotted #1c301466;padding-top:10px}
+[data-theme=gameboy] .chev{font-family:var(--font)}
+[data-theme=gameboy] #toast{border:3px solid #cde08a;box-shadow:3px 3px 0 #0006}
+/* --- Klemmbaustein: Noppen überall, Steinfarben --- */
+[data-theme=bricks] details.box{overflow:visible;position:relative;margin-top:26px}
+[data-theme=bricks] details.box::before{content:"";position:absolute;left:18px;right:18px;top:-15px;height:12px;background:radial-gradient(ellipse 12px 10px at 50% 100%,var(--stud,#fff) 97%,transparent 100%) 0 0/40px 12px repeat-x;filter:drop-shadow(0 -3px 0 #1b1b1b);pointer-events:none}
+[data-theme=bricks] details.box>summary{border-radius:11px}
+[data-theme=bricks] details[open].box>summary{border-radius:11px 11px 0 0;border-bottom:3px solid #1b1b1b}
+[data-theme=bricks] details.box:nth-of-type(4n+1){--stud:#fff}
+[data-theme=bricks] details.box>summary{background:#fff}
+[data-theme=bricks] details.box:nth-of-type(4n+1)>summary{box-shadow:inset 12px 0 0 #ffd500}
+[data-theme=bricks] details.box:nth-of-type(4n+2)>summary{box-shadow:inset 12px 0 0 #d01012}
+[data-theme=bricks] details.box:nth-of-type(4n+3)>summary{box-shadow:inset 12px 0 0 #1f9a45}
+[data-theme=bricks] details.box:nth-of-type(4n+4)>summary{box-shadow:inset 12px 0 0 #0b57c7}
+[data-theme=bricks] details.box>summary{padding-left:26px}
+[data-theme=bricks] details.box>.in{background:#fff;border-radius:0 0 11px 11px}
+[data-theme=bricks] .chev{color:#1b1b1b;font-weight:900}
+[data-theme=bricks] .tag{background:#ffd500;color:#1b1b1b;font-weight:800;border-radius:20px;border:2px solid #1b1b1b}
+[data-theme=bricks] .chart .bars{border-bottom:3px solid #1b1b1b}
+[data-theme=bricks] .chart .bn,[data-theme=bricks] .chart .br,[data-theme=bricks] .chart .bf{border-radius:4px 4px 0 0}
+[data-theme=bricks] .word::after{content:"";display:block;width:70px;height:10px;margin:10px auto 0;background:radial-gradient(circle,#ffd500 0 4px,#1b1b1b 4.5px 6px,transparent 6.5px) 0 0/24px 10px repeat-x}
+[data-theme=bricks] .ex{background:#f1f3f6;border-radius:12px;padding:8px 12px;font-style:normal;font-weight:600}
+@media(max-width:700px){[data-theme=bricks] nav{position:fixed}[data-theme=bricks] nav::before{content:"";position:absolute;left:14px;right:14px;top:-16px;height:12px;background:radial-gradient(ellipse 12px 10px at 50% 100%,#d01012 97%,transparent 100%) 0 0/44px 12px repeat-x;filter:drop-shadow(0 -3px 0 #1b1b1b);pointer-events:none}}
+[data-theme=bricks] table td{border-color:#d6d9de;font-weight:600}
+[data-theme=bricks] #toast{border:3px solid #1b1b1b;border-radius:14px}
+/* --- kleine Elemente aus den Welten --- */
+[data-theme=hyrule] .cat::before{content:"♥ ";color:#b02f26}[data-theme=hyrule] .cat::after{content:" ♥";color:#b02f26}
+[data-theme=hyrule] button.show::before{content:"✦ ";color:#ffe58a}
+[data-theme=hyrule] .hint::before{content:"❦ ";color:#c29a2e}
+[data-theme=gameboy] button.show::before{content:"▶ "}
+[data-theme=gameboy] .card::after{content:"B  A";position:absolute;right:14px;bottom:10px;font-size:9px;font-weight:700;letter-spacing:.2em;color:#a1255c;pointer-events:none}
+[data-theme=gameboy] .hint::before{content:"■ ";color:#a1255c}
+[data-theme=w40k] .card::after{content:"⚙ DATENSLATE";position:absolute;left:24px;bottom:12px;font-size:9px;letter-spacing:.18em;color:#6f6650;font-family:ui-monospace,Consolas,monospace;pointer-events:none}
+[data-theme=w40k] button.show::before{content:"⚙ "}
+[data-theme=w40k] .hint::before{content:"▸ ";color:#a8392e}
+[data-theme=bricks] .card::after{content:"";position:absolute;left:16px;bottom:12px;width:62px;height:12px;background:linear-gradient(#ffd500,#ffd500) 0 0/18px 12px no-repeat,linear-gradient(#d01012,#d01012) 22px 0/18px 12px no-repeat,linear-gradient(#0b57c7,#0b57c7) 44px 0/18px 12px no-repeat;border-radius:3px;pointer-events:none}
+[data-theme=bricks] button.show::before{content:"● ";color:#ffd500}
+[data-theme=bricks] .card{padding-bottom:40px}[data-theme=gameboy] .card{padding-bottom:30px}[data-theme=w40k] .card{padding-bottom:34px}
 </style>
 </head>
 <body>
@@ -5238,7 +5320,7 @@ you|du, Sie, ihr; dich, dir, euch|Are you coming to the meeting this afternoon?|
 young|jung; Junge (Tiere)|When I was young, I lived on a farm with my grandparents.|adj., n.
 your|dein(e), Ihr(e), euer|Is this your bag, or does it belong to someone else?|det.
 yourself|dich (selbst), dir (selbst), sich (selbst)|Be careful with that knife, or you might hurt yourself.|pron.`;
-const VERSION='2.9';
+const VERSION='3.0';
 const KEY='vokabeltrainer_v2';
 const MIN=60000, DAY=86400000, STEPS=[1,10], RELEARN=[10];
 const LEVELS=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];
