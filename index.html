@@ -78,11 +78,35 @@ button.dots:hover{background:var(--line)}
 .chart i{display:block;width:100%;min-height:0}
 .chart .bn{background:var(--acc)}.chart .br{background:var(--ok)}.chart .bf{background:var(--warn)}
 .chart small{font-size:10px;color:var(--mute);text-align:center;line-height:1.1}
+nav button i{font-style:normal;display:none}
+.word,.ans,.ex{overflow-wrap:anywhere;hyphens:auto}
+@media(max-width:700px){
+ header{position:sticky;top:0;z-index:20;justify-content:center;padding:calc(10px + env(safe-area-inset-top)) 12px 10px}
+ header h1{margin:0;font-size:17px;text-align:center}
+ nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(5,1fr);background:var(--card);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+ .kb{display:none}
+ .row:has(select),.row:has(input:not([type=checkbox]):not([type=radio])){flex-direction:column;align-items:stretch;gap:4px}
+ .row:has(select) select,.row:has(input:not([type=checkbox])) input{width:100%}
+ nav button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;font-size:11px;border-radius:12px;min-width:0}
+ nav button i{display:block;font-size:20px;line-height:1.1}
+ nav button span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ nav button.on{background:none;color:var(--acc);font-weight:600}
+ nav button.on i{background:var(--acc)22;border-radius:12px;padding:0 14px}
+ main{padding:14px 12px calc(96px + env(safe-area-inset-bottom))}
+ #toast{bottom:calc(88px + env(safe-area-inset-bottom))}
+ .card{padding:34px 14px 22px}
+ .counts{flex-wrap:wrap}
+ button.g{padding:12px 2px;font-size:14px}
+ select{max-width:100%}
+ .row{gap:6px}
+ table{font-size:13px}
+ .chart small{font-size:9px}
+}
 </style>
 </head>
 <body>
 <header><h1>Vokabeltrainer B2</h1>
-<nav><button data-v="learn" class="on">Lernen</button><button data-v="stats">Fortschritt</button><button data-v="practice">Üben</button><button data-v="browse">Wörter</button><button data-v="set">Einstellungen</button></nav></header>
+<nav><button data-v="learn" class="on"><i>📖</i><span>Lernen</span></button><button data-v="stats"><i>📊</i><span>Fortschritt</span></button><button data-v="practice"><i>✏️</i><span>Üben</span></button><button data-v="browse"><i>🔎</i><span>Wörter</span></button><button data-v="set"><i>⚙️</i><span>Einstellungen</span></button></nav></header>
 <main id="app"></main>
 <script>
 const RAW = `#Oxford 3000 · B2
@@ -5055,7 +5079,7 @@ you|du, Sie, ihr; dich, dir, euch|Are you coming to the meeting this afternoon?|
 young|jung; Junge (Tiere)|When I was young, I lived on a farm with my grandparents.|adj., n.
 your|dein(e), Ihr(e), euer|Is this your bag, or does it belong to someone else?|det.
 yourself|dich (selbst), dir (selbst), sich (selbst)|Be careful with that knife, or you might hurt yourself.|pron.`;
-const VERSION='2.3';
+const VERSION='2.4';
 const KEY='vokabeltrainer_v2';
 const MIN=60000, DAY=86400000, STEPS=[1,10], RELEARN=[10];
 const LEVELS=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];
@@ -5194,7 +5218,7 @@ function reveal(sug){if(shown||!cur)return;shown=true;document.getElementById('b
  const sp=document.getElementById('spk2');if(sp)sp.onclick=()=>speak(cur.en);
  speak(cur.en);
  const st=S.cards[cur.id];const L=['Nochmal','Schwer','Gut','Leicht'];
- document.getElementById('ctl').innerHTML=`<div class="btns">${[1,2,3,4].map(g=>`<button class="g g${g}${sug===g?' sug':''}" data-g="${g}">${L[g-1]} (${g})<small>${fmt(preview(st,g,cur.id).wait)}</small></button>`).join('')}</div>`;
+ document.getElementById('ctl').innerHTML=`<div class="btns">${[1,2,3,4].map(g=>`<button class="g g${g}${sug===g?' sug':''}" data-g="${g}">${L[g-1]}<span class="kb"> (${g})</span><small>${fmt(preview(st,g,cur.id).wait)}</small></button>`).join('')}</div>`;
  document.querySelectorAll('.g').forEach(b=>b.onclick=()=>{answer(cur.id,+b.dataset.g);rLearn()});
  const sb=document.getElementById('sentbox');if(sb){const n=(S.sent&&S.sent[cur.id]||[]).length;
   sb.innerHTML=`<div class="hint" style="margin:10px 0 0"><button class="lnk" id="sentbtn">✎ Eigenen Satz schreiben${n?' ('+n+' gespeichert)':''}</button></div><div id="sentform" style="display:none"><textarea id="senttxt" rows="2" placeholder="Schreibe einen Satz mit „${esc(cur.en)}“…" style="width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)"></textarea><button class="ghost g" id="sentsave" style="padding:6px 14px;margin-top:6px">Satz speichern</button></div>`;
