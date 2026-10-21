@@ -360,6 +360,61 @@ main{position:relative;z-index:1}
 [data-theme=gameboy] .pix::after{background:#1c301433;border-radius:0}
 [data-theme=hyrule] .card{padding-bottom:26px}[data-theme=gameboy] .card{padding-bottom:30px}[data-theme=w40k] .card{padding-bottom:34px}[data-theme=bricks] .card{padding-bottom:40px}
 [data-theme=gameboy] .card::after{right:auto;left:16px}
+/* ================= Superbike ================= */
+[data-theme=bike]{color-scheme:dark;--font:Bahnschrift,"Segoe UI Variable Text","Segoe UI",Roboto,system-ui,sans-serif;--hf:var(--font);--r:6px;--bg:#0b1226;--card:#141b30;--ink:#eef2fb;--mute:#93a1c2;--line:#26304d;--acc:#3b78ff;--ok:#34d399;--warn:#ffb020;--bad:#ff7a3d;--on:#ffffff}
+html[data-theme=bike]{background:repeating-linear-gradient(45deg,#ffffff07 0 2px,transparent 2px 4px),repeating-linear-gradient(-45deg,#00000040 0 2px,transparent 2px 4px),radial-gradient(ellipse at 50% 0,#14234f,#0a1020 70%)}
+[data-theme=bike] body{background:transparent}
+[data-theme=bike] header{position:relative;background:linear-gradient(105deg,#1747c9 0 88%,#ffffff 88% 89.3%,#5ec8ff 89.3% 91.3%,#1747c9 91.3%);border-color:#0a1a52;color:#fff}
+[data-theme=bike] header h1{color:#fff;font-style:italic;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:17px;text-shadow:0 2px 0 #0a1a5280}
+[data-theme=bike] header::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:10px;background:repeating-conic-gradient(#f4f6fb 0 25%,#12141c 0 50%) 0 0/10px 10px;pointer-events:none}
+[data-theme=bike] header::before{content:"";position:absolute;left:12px;top:50%;width:46px;height:8px;margin-top:-4px;background:radial-gradient(circle,#4d8bff 0 3px,transparent 3.5px) 0 0/10px 8px,linear-gradient(90deg,transparent 0 30px,#ffb020 30px 40px,transparent 40px);opacity:.95}
+@media(max-width:700px){[data-theme=bike] header::before{display:none}}
+[data-theme=bike] nav{background:#0d1428;border-color:#1747c9}
+[data-theme=bike] nav button{color:#8fa0c8;font-style:italic;font-weight:700}
+[data-theme=bike] nav button.on{color:#fff}
+@media(max-width:700px){[data-theme=bike] nav{border-top:2px solid #1747c9}[data-theme=bike] nav button.on{background:none;color:#6fa0ff}[data-theme=bike] nav button.on i{background:#1747c933}[data-theme=bike] nav button{font-size:10px;letter-spacing:-.02em}}
+[data-theme=bike] main{color:#dfe7fb}
+[data-theme=bike] main>.hint,[data-theme=bike] #sentbox .hint{color:#93a1c2}
+[data-theme=bike] #sentbox button.lnk,[data-theme=bike] main>.hint button.lnk{color:#6fa0ff}
+[data-theme=bike] .card,[data-theme=bike] .box{color:var(--ink);border:0;border-radius:0;clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,24px 100%,0 calc(100% - 24px));background:linear-gradient(90deg,#1747c9 0 4px,transparent 4px),repeating-linear-gradient(45deg,#ffffff05 0 2px,transparent 2px 4px),#161d34;box-shadow:inset 0 0 0 1px #2a3760}
+[data-theme=bike] .card{padding-left:28px}
+[data-theme=bike] .tile{border-radius:6px;box-shadow:none}
+[data-theme=bike] .word{font-style:italic;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+[data-theme=bike] .word::after{content:"";display:block;width:96px;height:4px;margin:10px auto 0;background:linear-gradient(90deg,#1747c9 0 60%,#fff 60% 70%,#5ec8ff 70%);transform:skewX(-30deg)}
+[data-theme=bike] .ans{font-weight:700;color:#6fa0ff}
+[data-theme=bike] .ex{border-left:3px solid #5ec8ff;padding-left:12px;text-align:left;font-style:italic;font-size:15px}
+[data-theme=bike] .cat{align-self:center;background:#1747c9;color:#fff;font-style:italic;font-weight:700;padding:2px 14px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+[data-theme=bike] .counts b{clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%);padding:3px 16px;border-radius:0;font-style:italic;font-weight:800}
+[data-theme=bike] button.g,[data-theme=bike] button.ghost,[data-theme=bike] button.show{border-radius:0;clip-path:polygon(9px 0,100% 0,calc(100% - 9px) 100%,0 100%);border:0;box-shadow:inset 0 0 0 1px #2a3760;background:#18203a;font-style:italic;font-weight:700}
+[data-theme=bike] button.g.g1{background:linear-gradient(#18203a,#18203a) padding-box;box-shadow:inset 0 -3px 0 #ff8a1f}
+[data-theme=bike] button.g.g2{box-shadow:inset 0 -3px 0 #ffe14d}[data-theme=bike] button.g.g3{box-shadow:inset 0 -3px 0 #34d399}[data-theme=bike] button.g.g4{box-shadow:inset 0 -3px 0 #3b78ff}
+[data-theme=bike] button.show{background:#1747c9;color:#fff;text-transform:uppercase;letter-spacing:.1em;box-shadow:none}
+[data-theme=bike] button.show::before{content:"▶▶ ";font-size:.8em;color:#ffb020}
+[data-theme=bike] .btns{gap:10px}
+[data-theme=bike] .bar{height:14px;border-radius:0;background:repeating-linear-gradient(90deg,#26304d 0 8px,#0b1226 8px 10px);transform:skewX(-20deg)}
+[data-theme=bike] .bar i{background:repeating-linear-gradient(90deg,#3b78ff 0 8px,transparent 8px 10px)}
+[data-theme=bike] input,[data-theme=bike] select,[data-theme=bike] textarea{background:#0e1429;border:1px solid #2a3760;border-radius:0;color:var(--ink)}
+[data-theme=bike] .si{background:#1747c9;color:#fff;border-radius:0;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);width:44px}
+[data-theme=bike] .st b,[data-theme=bike] .box h3{font-style:italic;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+[data-theme=bike] summary{background:linear-gradient(90deg,#1747c922,transparent 50%)}
+[data-theme=bike] .hint::before{content:"▸ ";color:#5ec8ff}
+[data-theme=bike] #toast{background:#1747c9;color:#fff;border-radius:0;font-style:italic;font-weight:700}
+[data-theme=bike] .chart .bn{background:#3b78ff}[data-theme=bike] .chart .br{background:#34d399}
+:is([data-view=learn],[data-view=practice])[data-theme=bike] .pix{display:block;position:fixed;z-index:0;left:50%;margin-left:-52px;bottom:calc(104px + env(safe-area-inset-bottom));width:104px;height:52px;pointer-events:none}
+[data-theme=bike] .pix b{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12' shape-rendering='crispEdges'%3E%3Crect x='16' y='0' width='1' height='1' fill='%23bfe0ff'/%3E%3Crect x='15' y='1' width='3' height='1' fill='%23bfe0ff'/%3E%3Crect x='2' y='2' width='5' height='1' fill='%231f56e0'/%3E%3Crect x='10' y='2' width='8' height='1' fill='%231f56e0'/%3E%3Crect x='1' y='3' width='1' height='1' fill='%23ffb020'/%3E%3Crect x='2' y='3' width='5' height='1' fill='%231f56e0'/%3E%3Crect x='7' y='3' width='3' height='1' fill='%2316171c'/%3E%3Crect x='10' y='3' width='11' height='1' fill='%231f56e0'/%3E%3Crect x='2' y='4' width='10' height='1' fill='%23143a9c'/%3E%3Crect x='12' y='4' width='8' height='1' fill='%231f56e0'/%3E%3Crect x='20' y='4' width='1' height='1' fill='%23f4f7ff'/%3E%3Crect x='21' y='4' width='1' height='1' fill='%23ffe45c'/%3E%3Crect x='3' y='5' width='3' height='1' fill='%2316171c'/%3E%3Crect x='7' y='5' width='4' height='1' fill='%2316171c'/%3E%3Crect x='11' y='5' width='2' height='1' fill='%231f56e0'/%3E%3Crect x='13' y='5' width='3' height='1' fill='%23f4f7ff'/%3E%3Crect x='16' y='5' width='2' height='1' fill='%231f56e0'/%3E%3Crect x='18' y='5' width='1' height='1' fill='%23aeb7c8'/%3E%3Crect x='19' y='5' width='2' height='1' fill='%2316171c'/%3E%3Crect x='2' y='6' width='1' height='1' fill='%2316171c'/%3E%3Crect x='3' y='6' width='3' height='1' fill='%237f889c'/%3E%3Crect x='6' y='6' width='6' height='1' fill='%2316171c'/%3E%3Crect x='12' y='6' width='1' height='1' fill='%23143a9c'/%3E%3Crect x='13' y='6' width='1' height='1' fill='%2316171c'/%3E%3Crect x='14' y='6' width='4' height='1' fill='%23143a9c'/%3E%3Crect x='18' y='6' width='1' height='1' fill='%23aeb7c8'/%3E%3Crect x='19' y='6' width='2' height='1' fill='%237f889c'/%3E%3Crect x='21' y='6' width='1' height='1' fill='%2316171c'/%3E%3Crect x='1' y='7' width='1' height='1' fill='%2316171c'/%3E%3Crect x='2' y='7' width='2' height='1' fill='%237f889c'/%3E%3Crect x='4' y='7' width='1' height='1' fill='%2316171c'/%3E%3Crect x='5' y='7' width='2' height='1' fill='%237f889c'/%3E%3Crect x='7' y='7' width='7' height='1' fill='%2316171c'/%3E%3Crect x='16' y='7' width='1' height='1' fill='%2316171c'/%3E%3Crect x='17' y='7' width='2' height='1' fill='%237f889c'/%3E%3Crect x='19' y='7' width='1' height='1' fill='%2316171c'/%3E%3Crect x='20' y='7' width='2' height='1' fill='%237f889c'/%3E%3Crect x='22' y='7' width='1' height='1' fill='%2316171c'/%3E%3Crect x='1' y='8' width='1' height='1' fill='%2316171c'/%3E%3Crect x='2' y='8' width='1' height='1' fill='%237f889c'/%3E%3Crect x='3' y='8' width='1' height='1' fill='%2316171c'/%3E%3Crect x='4' y='8' width='1' height='1' fill='%23aeb7c8'/%3E%3Crect x='5' y='8' width='1' height='1' fill='%2316171c'/%3E%3Crect x='6' y='8' width='1' height='1' fill='%237f889c'/%3E%3Crect x='7' y='8' width='2' height='1' fill='%23aeb7c8'/%3E%3Crect x='9' y='8' width='6' height='1' fill='%2316171c'/%3E%3Crect x='16' y='8' width='1' height='1' fill='%2316171c'/%3E%3Crect x='17' y='8' width='1' height='1' fill='%237f889c'/%3E%3Crect x='18' y='8' width='1' height='1' fill='%2316171c'/%3E%3Crect x='19' y='8' width='1' height='1' fill='%23aeb7c8'/%3E%3Crect x='20' y='8' width='1' height='1' fill='%2316171c'/%3E%3Crect x='21' y='8' width='1' height='1' fill='%237f889c'/%3E%3Crect x='22' y='8' width='1' height='1' fill='%2316171c'/%3E%3Crect x='1' y='9' width='1' height='1' fill='%2316171c'/%3E%3Crect x='2' y='9' width='2' height='1' fill='%237f889c'/%3E%3Crect x='4' y='9' width='1' height='1' fill='%2316171c'/%3E%3Crect x='5' y='9' width='8' height='1' fill='%23aeb7c8'/%3E%3Crect x='16' y='9' width='1' height='1' fill='%2316171c'/%3E%3Crect x='17' y='9' width='2' height='1' fill='%237f889c'/%3E%3Crect x='19' y='9' width='1' height='1' fill='%2316171c'/%3E%3Crect x='20' y='9' width='2' height='1' fill='%237f889c'/%3E%3Crect x='22' y='9' width='1' height='1' fill='%2316171c'/%3E%3Crect x='2' y='10' width='1' height='1' fill='%2316171c'/%3E%3Crect x='3' y='10' width='3' height='1' fill='%237f889c'/%3E%3Crect x='6' y='10' width='1' height='1' fill='%2316171c'/%3E%3Crect x='17' y='10' width='1' height='1' fill='%2316171c'/%3E%3Crect x='18' y='10' width='3' height='1' fill='%237f889c'/%3E%3Crect x='21' y='10' width='1' height='1' fill='%2316171c'/%3E%3Crect x='3' y='11' width='3' height='1' fill='%2316171c'/%3E%3Crect x='18' y='11' width='3' height='1' fill='%2316171c'/%3E%3C/svg%3E");filter:drop-shadow(0 0 6px #3b78ff77)}
+[data-theme=bike] .pix::before{content:"";position:absolute;right:98%;top:30%;width:46px;height:20px;background:repeating-linear-gradient(0deg,#9fc0ffcc 0 2px,transparent 2px 7px);-webkit-mask:linear-gradient(90deg,transparent,#000);mask:linear-gradient(90deg,transparent,#000);animation:streak .5s steps(5) infinite}
+@keyframes streak{0%{transform:translateX(8px);opacity:.2}100%{transform:translateX(-8px);opacity:1}}
+[data-theme=bike] .pix::after{left:12px;right:12px;background:#0006;border-radius:50%}
+/* --- sanftere Animationen --- */
+:root{interpolate-size:allow-keywords}
+details.box::details-content{block-size:0;overflow:clip;transition:block-size .38s cubic-bezier(.2,.8,.2,1),content-visibility .38s allow-discrete}
+details.box[open]::details-content{block-size:auto}
+details.box>.in{animation:dn .42s cubic-bezier(.2,.8,.2,1)}
+@keyframes dn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+main{animation:vin .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes vin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#toast{transition:.32s cubic-bezier(.2,.8,.2,1)}
+@media(prefers-reduced-motion:reduce){main,details.box>.in{animation:none}}
 </style>
 </head>
 <body>
@@ -5337,7 +5392,7 @@ you|du, Sie, ihr; dich, dir, euch|Are you coming to the meeting this afternoon?|
 young|jung; Junge (Tiere)|When I was young, I lived on a farm with my grandparents.|adj., n.
 your|dein(e), Ihr(e), euer|Is this your bag, or does it belong to someone else?|det.
 yourself|dich (selbst), dir (selbst), sich (selbst)|Be careful with that knife, or you might hurt yourself.|pron.`;
-const VERSION='3.5';
+const VERSION='3.7';
 const KEY='vokabeltrainer_v2';
 const MIN=60000, DAY=86400000, STEPS=[1,10], RELEARN=[10];
 const LEVELS=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];
@@ -5368,8 +5423,9 @@ const THEMES=[
  {id:'dark',n:'Dunkel',d:'Immer dunkel',c:['#14171f','#1e2330','#6c8cff'],top:'#1e2330'},
  {id:'hyrule',n:'Hyrule',d:'Waldgrün, Pergament, Ranken und Holz – Ocarina-of-Time-Stil',c:['#1a3626','#ecdcab','#c29a2e'],top:'#2a5a3b'},
  {id:'gameboy',n:'Game Boy',d:'Pixel-Look, Retro-Grün und Magenta-Akzent',c:['#9fb35c','#cde08a','#a1255c'],top:'#35549f'},
- {id:'w40k',n:'Imperium',d:'Technisch: Schwarz, Gold, Rot, Warnstreifen – 40K-Stil',c:['#131314','#1c1c1e','#b39a56'],top:'#1a1a1b'},
- {id:'bricks',n:'Klemmbaustein',d:'Bunt: kräftige Grundfarben und Noppen',c:['#2f6fcf','#ffffff','#ffd500'],top:'#ffd500'}];
+ {id:'w40k',n:'Imperium',d:'Technisch: Schwarz, Gold, Rot, Nieten – 40K-Stil',c:['#131314','#1c1c1e','#b39a56'],top:'#1a1a1b'},
+ {id:'bricks',n:'Klemmbaustein',d:'Bunt: kräftige Grundfarben und Noppen',c:['#2f6fcf','#ffffff','#ffd500'],top:'#ffd500'},
+ {id:'bike',n:'Superbike',d:'Blau-Weiß-Schwarz, Carbon, Drehzahlband und Zielflagge',c:['#0b1533','#141a2b','#2f6bff'],top:'#1747c9'}];
 function applyLook(){const r=document.documentElement;if(S.set.theme==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',S.set.theme);
  try{const m=document.querySelector&&document.querySelector('meta[name=theme-color]');if(m){const t=THEMES.find(x=>x.id===S.set.theme);m.content=t&&t.top||'#2f5bea'}}catch(e){}
  const m=document.getElementById('app');if(m)m.style.zoom=S.set.font}
@@ -5411,7 +5467,7 @@ function answer(id,g){const prev=S.cards[id]?JSON.parse(JSON.stringify(S.cards[i
 function hideCard(id){const p=S.cards[id]?JSON.parse(JSON.stringify(S.cards[id])):null;S.cards[id]={state:'suspended',prev:p}}
 function unhideCard(id){const s=S.cards[id];if(s&&s.state==='suspended'){if(s.prev)S.cards[id]=s.prev;else delete S.cards[id]}}
 function toast(m){let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';document.body.appendChild(t)}t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),1400)}
-function go(v){view=v;document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x.dataset.v===v));render();window.scrollTo&&window.scrollTo(0,0)}
+function go(v){view=v;try{const m=document.getElementById('app');m.style.animation='none';void m.offsetWidth;m.style.animation=''}catch(e){}document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x.dataset.v===v));render();window.scrollTo&&window.scrollTo(0,0)}
 function undo(){if(!lastUndo)return;const u=lastUndo;if(u.prev)S.cards[u.id]=u.prev;else delete S.cards[u.id];
  const D=dayc();D.n=u.day.n;D.r=u.day.r;lastUndo=null;syncHist();save()}
 // ---------- Queue ----------
