@@ -170,6 +170,97 @@ details.box>.in{padding:12px 16px 16px;animation:dn .18s ease-out}
 [data-theme=hyrule] .tile,[data-theme=gameboy] .tile,[data-theme=w40k] .tile{box-shadow:none}
 [data-theme=hyrule] main>.row label{color:#d9cc92!important}[data-theme=gameboy] main>.row label{color:#1c3014!important}
 @media(max-width:700px){[data-theme=w40k] header h1{font-size:14px}[data-theme=gameboy] nav button{font-size:9.5px;letter-spacing:-.02em}[data-theme=hyrule] nav button{font-size:10.5px}}
+/* ================= Theme-Optik (mehr als nur Farben) ================= */
+/* --- Hyrule: Wald --- */
+html[data-theme=hyrule]{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='90' viewBox='0 0 200 90'%3E%3Cg fill='%23224d35'%3E%3Cpolygon points='30%2C10 48%2C40 38%2C40 54%2C64 42%2C64 58%2C86 2%2C86 18%2C64 6%2C64 22%2C40 12%2C40'/%3E%3Cpolygon points='100%2C14 118%2C44 108%2C44 124%2C68 112%2C68 128%2C90 72%2C90 88%2C68 76%2C68 92%2C44 82%2C44'/%3E%3Cpolygon points='165%2C10 183%2C40 173%2C40 189%2C64 177%2C64 193%2C86 137%2C86 153%2C64 141%2C64 157%2C40 147%2C40'/%3E%3C/g%3E%3Cg fill='%231b4029'%3E%3Cpolygon points='65%2C14 83%2C44 73%2C44 89%2C68 77%2C68 93%2C90 37%2C90 53%2C68 41%2C68 57%2C44 47%2C44'/%3E%3Cpolygon points='135%2C14 153%2C44 143%2C44 159%2C68 147%2C68 163%2C90 107%2C90 123%2C68 111%2C68 127%2C44 117%2C44'/%3E%3C/g%3E%3C/svg%3E") repeat-x left bottom 64px/200px 90px fixed,radial-gradient(ellipse at 50% 0,#245238 0,#1a3626 55%,#13271c 100%) fixed}
+[data-theme=hyrule] body{background:transparent}
+[data-theme=hyrule] header{position:relative}
+[data-theme=hyrule] header::after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='12' viewBox='0 0 44 12'%3E%3Cpath d='M0 6Q11 0 22 6T44 6' stroke='%23d9c46a' fill='none' stroke-width='1.5'/%3E%3Cpath d='M9 4q4 -5 8 0q-4 4 -8 0z' fill='%235fa36b'/%3E%3Cpath d='M31 8q4 -5 8 0q-4 4 -8 0z' fill='%235fa36b'/%3E%3C/svg%3E") repeat-x center/44px 12px;pointer-events:none}
+[data-theme=hyrule] .card{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2 22C2 10 10 2 22 2c0 12-8 20-20 20z' fill='%23276b40' opacity='.9'/%3E%3Cpath d='M3 21L16 8' stroke='%23ecdcab' stroke-width='1.3' fill='none'/%3E%3C/svg%3E") no-repeat 8px 8px/26px 26px,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg transform='rotate%28180 12 12%29'%3E%3Cpath d='M2 22C2 10 10 2 22 2c0 12-8 20-20 20z' fill='%23276b40' opacity='.9'/%3E%3Cpath d='M3 21L16 8' stroke='%23ecdcab' stroke-width='1.3' fill='none'/%3E%3C/g%3E%3C/svg%3E") no-repeat right 8px bottom 8px/26px 26px,radial-gradient(circle at 18% 28%,#7a4a1a12 0,transparent 42%),radial-gradient(circle at 85% 72%,#7a4a1a16 0,transparent 46%),var(--card);box-shadow:inset 0 0 0 5px #ecdcab,inset 0 0 0 6px #c29a2e88,0 3px 12px #0006;border-radius:14px}
+[data-theme=hyrule] .box{background:radial-gradient(circle at 15% 20%,#7a4a1a10 0,transparent 45%),var(--card);border-radius:14px}
+[data-theme=hyrule] button.show{background:linear-gradient(#32804d,#276b40);border:1px solid #c29a2e;border-radius:20px;letter-spacing:.03em}
+[data-theme=hyrule] button.g,[data-theme=hyrule] button.ghost{border-radius:16px}
+[data-theme=hyrule] .bar{background:#0004;border-radius:8px}[data-theme=hyrule] .bar i{background:repeating-linear-gradient(90deg,#4f9d62 0 10px,#3f8752 10px 20px)}
+[data-theme=hyrule] .si{background:#276b40;color:#ffe58a;border-radius:50% 4px 50% 4px}
+@media(max-width:700px){[data-theme=hyrule] nav{background:repeating-linear-gradient(0deg,#ffffff0a 0 1px,transparent 1px 5px),repeating-linear-gradient(90deg,#4a3420 0 58px,#3a2917 58px 60px);border-top:3px solid #2b1d0e;color:#ecd9a0}[data-theme=hyrule] nav button{color:#e2cf94}[data-theme=hyrule] nav button.on{color:#fff0a8}}
+/* --- Game Boy: Pixel --- */
+html[data-theme=gameboy]{background:linear-gradient(45deg,#0000000d 25%,transparent 25%,transparent 75%,#0000000d 75%) 0 0/8px 8px,linear-gradient(45deg,#0000000d 25%,transparent 25%,transparent 75%,#0000000d 75%) 4px 4px/8px 8px,#9fb35c}
+[data-theme=gameboy] body{background:transparent;text-rendering:optimizeSpeed}
+[data-theme=gameboy] *{border-radius:0!important}
+[data-theme=gameboy] .card,[data-theme=gameboy] .box,[data-theme=gameboy] .tile,[data-theme=gameboy] button.g,[data-theme=gameboy] button.ghost,[data-theme=gameboy] button.show{border:0;box-shadow:0 -3px 0 #1c3014,0 3px 0 #1c3014,-3px 0 0 #1c3014,3px 0 0 #1c3014,6px 9px 0 0 #1c301444}
+[data-theme=gameboy] .btns{gap:12px}
+[data-theme=gameboy] .tile{box-shadow:0 -3px 0 #1c3014,0 3px 0 #1c3014,-3px 0 0 #1c3014,3px 0 0 #1c3014;margin:3px}
+[data-theme=gameboy] .tile.sel{box-shadow:0 -3px 0 #a1255c,0 3px 0 #a1255c,-3px 0 0 #a1255c,3px 0 0 #a1255c}
+[data-theme=gameboy] button.g:active,[data-theme=gameboy] button.show:active{transform:translate(3px,3px);box-shadow:0 -3px 0 #1c3014,0 3px 0 #1c3014,-3px 0 0 #1c3014,3px 0 0 #1c3014}
+[data-theme=gameboy] .g1{box-shadow:0 -3px 0 #b3282d,0 3px 0 #b3282d,-3px 0 0 #b3282d,3px 0 0 #b3282d!important}
+[data-theme=gameboy] .g2{box-shadow:0 -3px 0 #9c5a00,0 3px 0 #9c5a00,-3px 0 0 #9c5a00,3px 0 0 #9c5a00!important}
+[data-theme=gameboy] .g3{box-shadow:0 -3px 0 #2b7a1f,0 3px 0 #2b7a1f,-3px 0 0 #2b7a1f,3px 0 0 #2b7a1f!important}
+[data-theme=gameboy] .g4{box-shadow:0 -3px 0 #35549f,0 3px 0 #35549f,-3px 0 0 #35549f,3px 0 0 #35549f!important}
+[data-theme=gameboy] .bar{height:16px;background:#6f8a33;box-shadow:0 0 0 3px #1c3014;margin:8px 3px 16px}
+[data-theme=gameboy] .bar i{background:repeating-linear-gradient(90deg,#2b7a1f 0 6px,#8fd04a 6px 8px)}
+[data-theme=gameboy] header h1{text-shadow:2px 2px 0 #1a2c5e}
+[data-theme=gameboy] header,[data-theme=gameboy] nav{border-width:0;box-shadow:0 4px 0 #1c3014}
+@media(max-width:700px){[data-theme=gameboy] nav{box-shadow:0 -4px 0 #1c3014}}
+[data-theme=gameboy] .si{box-shadow:inset -3px -3px 0 #0003}
+[data-theme=gameboy] .sp,[data-theme=gameboy] .dots{filter:contrast(1.2)}
+[data-theme=gameboy] .chart .bars{border-bottom:3px solid #1c3014}
+/* --- Imperium: Maschinell/technisch --- */
+html[data-theme=w40k]{background:repeating-linear-gradient(0deg,#ffffff06 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,#ffffff03 0 1px,transparent 1px 48px),radial-gradient(ellipse at 50% 0,#1d1d20,#101011 70%)}
+[data-theme=w40k] body{background:transparent}
+[data-theme=w40k] header{position:relative}
+[data-theme=w40k] header::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:6px;background:repeating-linear-gradient(-45deg,#b39a56 0 8px,#131314 8px 16px);pointer-events:none}
+[data-theme=w40k] header h1::before{content:"// ";color:#a8392e}
+[data-theme=w40k] .card,[data-theme=w40k] .box{border-radius:0;border:0;clip-path:polygon(16px 0,calc(100% - 16px) 0,100% 16px,100% calc(100% - 16px),calc(100% - 16px) 100%,16px 100%,0 calc(100% - 16px),0 16px);background:linear-gradient(135deg,#b39a56 0 2px,transparent 2px) top left/18px 18px no-repeat,linear-gradient(225deg,#b39a56 0 2px,transparent 2px) top right/18px 18px no-repeat,linear-gradient(45deg,#b39a56 0 2px,transparent 2px) bottom left/18px 18px no-repeat,linear-gradient(315deg,#b39a56 0 2px,transparent 2px) bottom right/18px 18px no-repeat,linear-gradient(#6b2a24,#6b2a24) top/100% 3px no-repeat,#212124;box-shadow:inset 0 0 0 1px #4a4536}
+[data-theme=w40k] .card{padding-top:36px}
+[data-theme=w40k] .tile{border-radius:0}
+[data-theme=w40k] button.g,[data-theme=w40k] button.ghost,[data-theme=w40k] button.show{border-radius:0;box-shadow:inset 0 0 0 1px #4a4536;clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px)}
+[data-theme=w40k] .cat{display:inline-block;align-self:center;font-family:ui-monospace,Consolas,"Cascadia Mono",monospace;letter-spacing:.14em;padding:2px 10px;border:1px solid #6b2a24;background:#6b2a2433}
+[data-theme=w40k] .cat::before{content:"■ ";color:#b39a56}
+[data-theme=w40k] .counts b,[data-theme=w40k] .st small,[data-theme=w40k] .tag,[data-theme=w40k] .hint,[data-theme=w40k] td{font-family:ui-monospace,Consolas,"Cascadia Mono",monospace}
+[data-theme=w40k] .counts b{border-radius:0}
+[data-theme=w40k] .bar{border-radius:0;height:12px;background:repeating-linear-gradient(90deg,#2a2a2c 0 8px,#131314 8px 10px);border:1px solid #3d3a31}
+[data-theme=w40k] .bar i{background:repeating-linear-gradient(90deg,#b39a56 0 8px,transparent 8px 10px)}
+[data-theme=w40k] .si{clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);border-radius:0}
+[data-theme=w40k] input,[data-theme=w40k] select,[data-theme=w40k] textarea{border-radius:0;font-family:ui-monospace,Consolas,monospace}
+@media(max-width:700px){[data-theme=w40k] nav{border-top:0}[data-theme=w40k] nav::before{content:"";position:absolute;left:0;right:0;top:-6px;height:6px;background:repeating-linear-gradient(-45deg,#b39a56 0 8px,#131314 8px 16px)}}
+/* --- Klemmbaustein: bunt, Noppen --- */
+[data-theme=bricks]{color-scheme:light;--font:"Nunito","Varela Round","Arial Rounded MT Bold",ui-rounded,"Trebuchet MS","Segoe UI",system-ui,sans-serif;--hf:var(--font);--r:12px;--bg:#2f6fcf;--card:#ffffff;--ink:#1b1b1b;--mute:#555b66;--line:#d6d9de;--acc:#0b57c7;--ok:#1f8a3d;--warn:#d96e00;--bad:#d01012;--on:#ffffff}
+html[data-theme=bricks]{background:radial-gradient(circle,#ffffff2e 0 5px,transparent 5.5px) 0 0/30px 30px,#2f6fcf}
+[data-theme=bricks] body{background:transparent;font-weight:600}
+[data-theme=bricks] header,[data-theme=bricks] nav{background:#ffd500;color:#1b1b1b;border-color:#1b1b1b}
+[data-theme=bricks] header{border-bottom:4px solid #1b1b1b}
+[data-theme=bricks] header h1{color:#1b1b1b;font-weight:900;letter-spacing:.01em}
+[data-theme=bricks] main{color:#fff}
+[data-theme=bricks] main>.hint,[data-theme=bricks] #sentbox .hint{color:#e8f0ff}[data-theme=bricks] #sentbox button.lnk,[data-theme=bricks] main>.hint button.lnk{color:#ffe14d}
+[data-theme=bricks] main>.row label{color:#fff!important}
+[data-theme=bricks] .card,[data-theme=bricks] .box,[data-theme=bricks] .tile{color:var(--ink);border:3px solid #1b1b1b;box-shadow:0 6px 0 #1b1b1b;border-radius:14px}
+[data-theme=bricks] .card{margin-top:24px;margin-bottom:6px}
+[data-theme=bricks] .card::before{content:"";position:absolute;left:18px;right:18px;top:-15px;height:12px;background:radial-gradient(ellipse 12px 10px at 50% 100%,#fff 97%,transparent 100%) 0 0/40px 12px repeat-x;filter:drop-shadow(0 -3px 0 #1b1b1b);pointer-events:none}
+[data-theme=bricks] .word,[data-theme=bricks] .ans,[data-theme=bricks] .st b,[data-theme=bricks] .box h3{font-weight:900}
+[data-theme=bricks] .ans{color:#d01012}
+[data-theme=bricks] .cat{color:#fff;background:#0b57c7;align-self:center;padding:3px 12px;border-radius:20px;font-weight:800}
+[data-theme=bricks] .counts b{border-radius:8px;font-weight:900}
+[data-theme=bricks] .counts{color:#fff}
+[data-theme=bricks] .counts .n{background:#fff;color:#0b57c7}[data-theme=bricks] .counts .l{background:#fff;color:#d96e00}[data-theme=bricks] .counts .r{background:#fff;color:#1f8a3d}
+[data-theme=bricks] button.g,[data-theme=bricks] button.ghost,[data-theme=bricks] button.show{border:3px solid #1b1b1b!important;box-shadow:0 4px 0 #1b1b1b;border-radius:10px;font-weight:800;position:relative}
+[data-theme=bricks] button.g{margin-top:8px}
+[data-theme=bricks] .btns button.g::before{content:"";position:absolute;left:50%;transform:translateX(-50%);top:-9px;width:46%;height:8px;background:inherit;border:3px solid #1b1b1b;border-bottom:0;border-radius:6px 6px 0 0}
+[data-theme=bricks] .g1{background:#d01012;color:#fff}[data-theme=bricks] .g2{background:#f58a1f;color:#1b1b1b}[data-theme=bricks] .g3{background:#1f9a45;color:#fff}[data-theme=bricks] .g4{background:#0b57c7;color:#fff}
+[data-theme=bricks] button.g small{color:inherit;opacity:.9}
+[data-theme=bricks] button.g.sug{outline:4px solid #ffd500}
+[data-theme=bricks] button.show{background:#d01012;color:#fff}
+[data-theme=bricks] button.ghost{background:#fff}
+[data-theme=bricks] input,[data-theme=bricks] select,[data-theme=bricks] textarea{border:3px solid #1b1b1b;border-radius:10px;background:#fff;color:#1b1b1b;font-weight:700}
+[data-theme=bricks] .si{border-radius:50%;background:#ffd500;border:3px solid #1b1b1b;width:40px;height:40px;box-shadow:0 3px 0 #1b1b1b}
+[data-theme=bricks] details.box:nth-of-type(4n+2) .si{background:#d01012}[data-theme=bricks] details.box:nth-of-type(4n+3) .si{background:#1f9a45}[data-theme=bricks] details.box:nth-of-type(4n+4) .si{background:#0b57c7}
+[data-theme=bricks] .bar{height:16px;background:#fff;border:3px solid #1b1b1b;border-radius:10px}[data-theme=bricks] .bar i{background:repeating-linear-gradient(90deg,#1f9a45 0 22px,#2bb457 22px 24px)}
+[data-theme=bricks] .chart .bn{background:#0b57c7}[data-theme=bricks] .chart .br{background:#1f9a45}
+[data-theme=bricks] .tile.sel{box-shadow:0 6px 0 #d01012;border-color:#d01012}
+[data-theme=bricks] nav{border-top:4px solid #1b1b1b}
+[data-theme=bricks] nav button{color:#1b1b1b;font-weight:800}
+[data-theme=bricks] nav button.on{background:#d01012;color:#fff}
+[data-theme=bricks] #toast{background:#1b1b1b;color:#ffd500}
+@media(max-width:700px){[data-theme=bricks] nav{background:#d01012;border-top:4px solid #1b1b1b}[data-theme=bricks] nav button{color:#fff}[data-theme=bricks] nav button.on{background:none;color:#ffd500}[data-theme=bricks] nav button.on i{background:#ffffff33}}
 </style>
 </head>
 <body>
@@ -5147,7 +5238,7 @@ you|du, Sie, ihr; dich, dir, euch|Are you coming to the meeting this afternoon?|
 young|jung; Junge (Tiere)|When I was young, I lived on a farm with my grandparents.|adj., n.
 your|dein(e), Ihr(e), euer|Is this your bag, or does it belong to someone else?|det.
 yourself|dich (selbst), dir (selbst), sich (selbst)|Be careful with that knife, or you might hurt yourself.|pron.`;
-const VERSION='2.8';
+const VERSION='2.9';
 const KEY='vokabeltrainer_v2';
 const MIN=60000, DAY=86400000, STEPS=[1,10], RELEARN=[10];
 const LEVELS=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];
@@ -5176,9 +5267,10 @@ const THEMES=[
  {id:'auto',n:'Standard',d:'Passt sich dem Gerät an (hell/dunkel)',c:['#f4f5f7','#fff','#2f5bea'],top:'#2f5bea'},
  {id:'light',n:'Hell',d:'Immer hell',c:['#f4f5f7','#fff','#2f5bea'],top:'#ffffff'},
  {id:'dark',n:'Dunkel',d:'Immer dunkel',c:['#14171f','#1e2330','#6c8cff'],top:'#1e2330'},
- {id:'hyrule',n:'Hyrule',d:'Pergament, sattes Waldgrün und Gold – Ocarina-of-Time-Stil',c:['#1a3626','#ecdcab','#c29a2e'],top:'#2a5a3b'},
- {id:'gameboy',n:'Game Boy',d:'Kräftiges Retro-Grün, Monospace und Magenta-Akzent',c:['#9fb35c','#cde08a','#a1255c'],top:'#35549f'},
- {id:'w40k',n:'Imperium',d:'Düster: Schwarz, Gold und Blutrot – 40K-Stil',c:['#131314','#1c1c1e','#b39a56'],top:'#1a1a1b'}];
+ {id:'hyrule',n:'Hyrule',d:'Waldgrün, Pergament, Ranken und Holz – Ocarina-of-Time-Stil',c:['#1a3626','#ecdcab','#c29a2e'],top:'#2a5a3b'},
+ {id:'gameboy',n:'Game Boy',d:'Pixel-Look, Retro-Grün und Magenta-Akzent',c:['#9fb35c','#cde08a','#a1255c'],top:'#35549f'},
+ {id:'w40k',n:'Imperium',d:'Technisch: Schwarz, Gold, Rot, Warnstreifen – 40K-Stil',c:['#131314','#1c1c1e','#b39a56'],top:'#1a1a1b'},
+ {id:'bricks',n:'Klemmbaustein',d:'Bunt: kräftige Grundfarben und Noppen',c:['#2f6fcf','#ffffff','#ffd500'],top:'#ffd500'}];
 function applyLook(){const r=document.documentElement;if(S.set.theme==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',S.set.theme);
  try{const m=document.querySelector&&document.querySelector('meta[name=theme-color]');if(m){const t=THEMES.find(x=>x.id===S.set.theme);m.content=t&&t.top||'#2f5bea'}}catch(e){}
  const m=document.getElementById('app');if(m)m.style.zoom=S.set.font}
