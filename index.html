@@ -5285,7 +5285,7 @@ you|du, Sie, ihr; dich, dir, euch|Are you coming to the meeting this afternoon?|
 young|jung; Junge (Tiere)|When I was young, I lived on a farm with my grandparents.|adj., n.
 your|dein(e), Ihr(e), euer|Is this your bag, or does it belong to someone else?|det.
 yourself|dich (selbst), dir (selbst), sich (selbst)|Be careful with that knife, or you might hurt yourself.|pron.`;
-const VERSION='4.0';
+const VERSION='4.2';
 const KEY='vokabeltrainer_v2';
 const MIN=60000, DAY=86400000, STEPS=[1,10], RELEARN=[10];
 const LEVELS=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];
@@ -5300,14 +5300,16 @@ const getCats=()=>[...new Set(CARDS.map(c=>c.cat))];
 // ---------- State ----------
 let S,lastUndo=null;
 const ld=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-const today=()=>ld(new Date());
+const today=()=>ld(dayStart(Date.now()));
 function syncHist(){const D=dayc();S.hist=S.hist||{};S.hist[today()]={n:D.n,r:D.r}}
 function load(){let st;try{st=JSON.parse(localStorage.getItem(KEY))}catch(e){}
  S=st||{cards:{},set:{},day:{}};S.cards=S.cards||{};
  const legacy=S.set&&S.set.skipBasic;
  S.set=Object.assign({},DEF,S.set||{});
  if(!Array.isArray(S.set.off))S.set.off=(legacy===false)?[]:['Oxford 3000 · A1','Oxford 3000 · A2'];
- S.day=Object.assign({d:'',n:0,r:0},S.day||{});applyLook()}
+ S.day=Object.assign({d:'',n:0,r:0},S.day||{});
+ for(const k in S.cards){const c=S.cards[k];if(c&&c.state==='review'&&c.due){const d=new Date(c.due);if(d.getHours()===0&&d.getMinutes()===0&&d.getSeconds()===0)d.setHours(4,0,0,0);else d.setTime(dayStart(c.due).getTime());c.due=d.getTime()}}
+ applyLook()}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function dayc(){if(S.day.d!==today())S.day={d:today(),n:0,r:0};return S.day}
 const THEMES=[
@@ -5354,7 +5356,11 @@ function preview(st,g,id){
 function answer(id,g){const prev=S.cards[id]?JSON.parse(JSON.stringify(S.cards[id])):null;const D=dayc();lastUndo={id,prev,day:{n:D.n,r:D.r}};
  const was=prev?prev.state:'new';const o=preview(S.cards[id],g,id);
  if(was==='new')D.n++;else if(was==='review')D.r++;
- o.due=Date.now()+o.wait;delete o.wait;o.last=Date.now();S.cards[id]=o;syncHist();save()}
+ o.due=dueAt(o);delete o.wait;o.last=Date.now();S.cards[id]=o;syncHist();save()}
+// Ab 1 Tag Abstand: fällig ab Tagesbeginn (04:00) des Zieltags, nicht zur Uhrzeit der Antwort
+// Tageswechsel um 04:00 Uhr: Lernen nach Mitternacht zählt noch zum Vortag
+function dayStart(t){const d=new Date(t);if(d.getHours()<4)d.setDate(d.getDate()-1);d.setHours(4,0,0,0);return d}
+function dueAt(o){if(o.state==='review'&&o.wait>=DAY){const d=dayStart(Date.now());d.setDate(d.getDate()+Math.round(o.wait/DAY));return d.getTime()}return Date.now()+o.wait}
 function hideCard(id){const p=S.cards[id]?JSON.parse(JSON.stringify(S.cards[id])):null;S.cards[id]={state:'suspended',prev:p}}
 function unhideCard(id){const s=S.cards[id];if(s&&s.state==='suspended'){if(s.prev)S.cards[id]=s.prev;else delete S.cards[id]}}
 function toast(m){let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';document.body.appendChild(t)}t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),1400)}
@@ -5478,14 +5484,14 @@ function rStats(){const vis=CARDS.filter(c=>S.cards[c.id]||!S.set.off.includes(c
   if(!s)nw++;else if(s.state==='suspended')hid++;else if(s.state!=='review')lrn++;else{(s.ivl>=21?mt++:yg++);per[c.cat].k++}}
  const known=yg+mt;const D=dayc();const days=S.set.newPerDay>0?Math.ceil(nw/S.set.newPerDay):0;
  const H=S.hist||{};const hv=k=>k===today()?{n:D.n,r:D.r}:(H[k]||{n:0,r:0});
- const dd=[];for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const k=ld(d);const v=hv(k);dd.push({k,n:v.n,r:v.r,l:['So','Mo','Di','Mi','Do','Fr','Sa'][d.getDay()]})}
+ const dd=[];for(let i=13;i>=0;i--){const d=dayStart(Date.now());d.setDate(d.getDate()-i);const k=ld(d);const v=hv(k);dd.push({k,n:v.n,r:v.r,l:['So','Mo','Di','Mi','Do','Fr','Sa'][d.getDay()]})}
  const mx=Math.max(5,...dd.map(x=>x.n+x.r));
- let streak=0;for(let i=0;i<400;i++){const d=new Date();d.setDate(d.getDate()-i);const v=hv(ld(d));if(v.n+v.r>0)streak++;else if(i>0)break}
- const sod=new Date();sod.setHours(0,0,0,0);const fc=[0,0,0,0,0,0,0];
- for(const c of CARDS){const s=S.cards[c.id];if(!s||s.state==='suspended'||s.state==='new')continue;const ix=Math.max(0,Math.floor((s.due-sod.getTime())/DAY));if(ix<7)fc[ix]++}
+ let streak=0;for(let i=0;i<400;i++){const d=dayStart(Date.now());d.setDate(d.getDate()-i);const v=hv(ld(d));if(v.n+v.r>0)streak++;else if(i>0)break}
+ const sod=dayStart(Date.now());const fc=[0,0,0,0,0,0,0];
+ for(const c of CARDS){const s=S.cards[c.id];if(!s||s.state==='suspended'||s.state==='new')continue;const ix=Math.max(0,Math.round((dayStart(s.due).getTime()-sod.getTime())/DAY));if(ix<7)fc[ix]++}
  const prob=CARDS.filter(c=>S.cards[c.id]&&S.cards[c.id].state!=='suspended'&&S.cards[c.id].lapses>=S.set.leech).length;
  const chart=`<div class="box"><h3 style="margin-top:0">Letzte 14 Tage <span class="tag">Serie: ${streak} ${streak===1?'Tag':'Tage'}</span></h3><div class="chart">${dd.map(x=>`<div class="col"><div class="bars" title="${x.k}: ${x.n} neu, ${x.r} wiederholt"><i class="bn" style="height:${x.n/mx*100}%"></i><i class="br" style="height:${x.r/mx*100}%"></i></div><small>${x.l}</small></div>`).join('')}</div><div class="hint" style="margin:6px 0 0">Blau = neu, grün = wiederholt</div></div>
- <div class="box"><h3 style="margin-top:0">Fällig in den nächsten 7 Tagen</h3><div class="chart">${fc.map((n,i)=>{const d=new Date();d.setDate(d.getDate()+i);return `<div class="col"><div class="bars"><i class="bf" style="height:${n/Math.max(5,...fc)*100}%"></i></div><small>${i?['So','Mo','Di','Mi','Do','Fr','Sa'][d.getDay()]:'Heute'}<br>${n}</small></div>`}).join('')}</div></div>`;
+ <div class="box"><h3 style="margin-top:0">Fällig in den nächsten 7 Tagen</h3><div class="chart">${fc.map((n,i)=>{const d=dayStart(Date.now());d.setDate(d.getDate()+i);return `<div class="col"><div class="bars"><i class="bf" style="height:${n/Math.max(5,...fc)*100}%"></i></div><small>${i?['So','Mo','Di','Mi','Do','Fr','Sa'][d.getDay()]:'Heute'}<br>${n}</small></div>`}).join('')}</div></div>`;
  app.innerHTML=chart+`<div class="box"><h3 style="margin-top:0">Gesamt: ${known} von ${total} gelernt</h3><div class="bar"><i style="width:${total?known/total*100:0}%"></i></div>
  <table><tr><td>Heute neu / wiederholt</td><td>${D.n} / ${D.r}</td></tr><tr><td>Neu (noch nie gesehen)</td><td>${nw}</td></tr><tr><td>In der Lernphase</td><td>${lrn}</td></tr><tr><td>Jung (Intervall &lt; 21 Tage)</td><td>${yg}</td></tr><tr><td>Gefestigt (Intervall ≥ 21 Tage)</td><td>${mt}</td></tr><tr><td>Ausgeblendet</td><td>${hid}</td></tr><tr><td>Problemwörter</td><td>${prob}</td></tr>
  <tr><td>Alle neuen Wörter einmal gesehen in</td><td>ca. ${days} Tagen</td></tr></table></div>
