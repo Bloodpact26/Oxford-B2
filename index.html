@@ -305,8 +305,8 @@ main{animation:vin .5s cubic-bezier(.2,.8,.2,1) both}
 @keyframes vin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 #toast{transition:.32s cubic-bezier(.2,.8,.2,1)}
 @media(prefers-reduced-motion:reduce){main,details.box>.in{animation:none}}
-@keyframes cheer{0%{transform:translateY(0) rotate(0deg);animation-timing-function:cubic-bezier(.2,.7,.4,1)}50%{transform:translateY(-57px) rotate(180deg);animation-timing-function:cubic-bezier(.6,0,.8,.3)}100%{transform:translateY(0) rotate(360deg)}}
-:root[data-done] .pix b{animation:cheer 1.3s linear 1,bob 1.6s infinite steps(1,end) 1.3s}
+@keyframes cheer{0.0%{transform:translateY(-0.00px) rotate(0.0deg)}6.25%{transform:translateY(-13.36px) rotate(22.5deg)}12.5%{transform:translateY(-24.94px) rotate(45.0deg)}18.75%{transform:translateY(-34.73px) rotate(67.5deg)}25.0%{transform:translateY(-42.75px) rotate(90.0deg)}31.25%{transform:translateY(-48.98px) rotate(112.5deg)}37.5%{transform:translateY(-53.44px) rotate(135.0deg)}43.75%{transform:translateY(-56.11px) rotate(157.5deg)}50.0%{transform:translateY(-57.00px) rotate(180.0deg)}56.25%{transform:translateY(-56.11px) rotate(202.5deg)}62.5%{transform:translateY(-53.44px) rotate(225.0deg)}68.75%{transform:translateY(-48.98px) rotate(247.5deg)}75.0%{transform:translateY(-42.75px) rotate(270.0deg)}81.25%{transform:translateY(-34.73px) rotate(292.5deg)}87.5%{transform:translateY(-24.94px) rotate(315.0deg)}93.75%{transform:translateY(-13.36px) rotate(337.5deg)}100.0%{transform:translateY(-0.00px) rotate(360.0deg)}}
+:root[data-done] .pix b{animation:bob 1.6s infinite steps(1,end),cheer .85s linear 1}
 @media(prefers-reduced-motion:reduce){:root[data-done] .pix b{animation:none}}
 </style>
 </head>
@@ -5285,7 +5285,7 @@ you|du, Sie, ihr; dich, dir, euch|Are you coming to the meeting this afternoon?|
 young|jung; Junge (Tiere)|When I was young, I lived on a farm with my grandparents.|adj., n.
 your|dein(e), Ihr(e), euer|Is this your bag, or does it belong to someone else?|det.
 yourself|dich (selbst), dir (selbst), sich (selbst)|Be careful with that knife, or you might hurt yourself.|pron.`;
-const VERSION='3.9';
+const VERSION='4.0';
 const KEY='vokabeltrainer_v2';
 const MIN=60000, DAY=86400000, STEPS=[1,10], RELEARN=[10];
 const LEVELS=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];
