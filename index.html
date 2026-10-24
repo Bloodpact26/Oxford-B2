@@ -5351,9 +5351,9 @@ you|du, Sie, ihr; dich, dir, euch|Are you coming to the meeting this afternoon?|
 young|jung; Junge (Tiere)|When I was young, I lived on a farm with my grandparents.|adj., n.
 your|dein(e), Ihr(e), euer|Is this your bag, or does it belong to someone else?|det.
 yourself|dich (selbst), dir (selbst), sich (selbst)|Be careful with that knife, or you might hurt yourself.|pron.`;
-const VERSION='5.8';
+const VERSION='6.0';
 const KEY='vokabeltrainer_v2';
-const MIN=60000, DAY=86400000, STEPS=[1,10], RELEARN=[10];
+const MIN=60000, DAY=86400000, STEPS=[1,10,30], RELEARN=[10];
 const LEVELS=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];
 const DEF={leech:4,focus:'all',newPerDay:15,revLimit:200,order:'level',dir:'en-de',typing:false,tts:true,accent:'en-GB',rate:1,ivlMod:1,theme:'auto',font:1,backup:true,off:null};
 // ---------- Daten (Fortschritt wird pro Wort gespeichert) ----------
@@ -5476,7 +5476,8 @@ function rLearn(){const q=queue();cur=nextCard(q);shown=false;document.documentE
   document.documentElement.setAttribute('data-done','1');
   const pend=CARDS.map(c=>S.cards[c.id]).filter(s=>s&&s.state!=='review'&&s.state!=='suspended'&&s.due>Date.now()).sort((a,b)=>a.due-b.due);
   const D=dayc();
-  app.innerHTML=counts+`<div class="card"><div class="word">Für heute geschafft!</div><div class="ex">${pend.length?`Nächste Karte in ${fmt(pend[0].due-Date.now())}.`:'Komm morgen wieder.'}</div>
+  const nd=dayStart(Date.now());nd.setDate(nd.getDate()+1);const soon=pend.length&&pend[0].due<nd.getTime();
+  app.innerHTML=counts+`<div class="card"><div class="word">${soon?'Für jetzt geschafft!':'Für heute geschafft!'}</div><div class="ex">${pend.length?`Nächste Karte in ${fmt(pend[0].due-Date.now())}.`:'Komm morgen wieder.'}</div>
   <div class="ex">Heute: ${D.n} neu, ${D.r} wiederholt${q.revTotal>q.rev.length?` · ${q.revTotal-q.rev.length} Wiederholungen warten (Limit)`:''}</div>
   <div>${q.newTotal?`<button class="ghost g" id="more" style="padding:12px 20px">+10 neue Wörter lernen</button>`:''}${q.revTotal>q.rev.length?` <button class="ghost g" id="morer" style="padding:12px 20px">+50 Wiederholungen</button>`:''}</div></div>`;
   wire();
@@ -5564,16 +5565,18 @@ function rStats(){const vis=CARDS.filter(c=>S.cards[c.id]||!S.set.off.includes(c
  <tr><td>Alle neuen Wörter einmal gesehen in</td><td>ca. ${days} Tagen</td></tr></table></div>
  <div class="box"><h3 style="margin-top:0">Nach Kategorie</h3>${CATS.map(c=>`<div>${esc(c)} <span class="tag">${per[c].k}/${per[c].t}</span></div><div class="bar"><i style="width:${per[c].k/per[c].t*100}%"></i></div>`).join('')}</div>`}
 let bflt='all';
+let bcat='all';
 function rBrowse(){const hid=CARDS.filter(c=>S.cards[c.id]&&S.cards[c.id].state==='suspended').length;
- app.innerHTML=`<input type="search" id="q" placeholder="Wort suchen (Englisch oder Deutsch)…"><div class="row"><select id="flt">${opt('all',bflt,'Alle Wörter')}${opt('new',bflt,'Neu')}${opt('learning',bflt,'In der Lernphase')}${opt('review',bflt,'Gelernt')}${opt('problem',bflt,'Problemwörter')}${opt('suspended',bflt,'Ausgeblendet ('+hid+')')}</select>${hid?'<button class="ghost g" id="unall" style="padding:6px 12px">Alle ausgeblendeten einblenden</button>':''}</div><div class="box" id="lst"></div>`;
+ app.innerHTML=`<input type="search" id="q" placeholder="Wort suchen (Englisch oder Deutsch)…"><div class="row"><select id="flt">${opt('all',bflt,'Alle Wörter')}${opt('new',bflt,'Neu')}${opt('learning',bflt,'In der Lernphase')}${opt('review',bflt,'Gelernt')}${opt('problem',bflt,'Problemwörter')}${opt('suspended',bflt,'Ausgeblendet ('+hid+')')}</select><select id="cflt">${opt('all',bcat,'Alle Niveaus')}${['A1','A2','B1','B2','C1'].filter(l=>CARDS.some(c=>c.cat.endsWith('· '+l))).map(l=>opt(l,bcat,l)).join('')}${CARDS.some(c=>c.cat===OWN)?opt('own',bcat,'Eigene Wörter'):''}</select>${hid?'<button class="ghost g" id="unall" style="padding:6px 12px">Alle ausgeblendeten einblenden</button>':''}</div><div class="box" id="lst"></div>`;
  const status=c=>{const s=S.cards[c.id];return !s?'new':s.state==='suspended'?'suspended':s.state==='review'?'review':'learning'};
  const isProb=c=>{const s=S.cards[c.id];return s&&s.state!=='suspended'&&s.lapses>=S.set.leech};
  const f=()=>{const q=document.getElementById('q').value.toLowerCase();
-  const r=CARDS.filter(c=>(bflt==='all'||(bflt==='problem'?isProb(c):status(c)===bflt))&&(!q||c.en.toLowerCase().includes(q)||c.de.toLowerCase().includes(q))).slice(0,150);
+  const inCat=c=>bcat==='all'||(bcat==='own'?c.cat===OWN:c.cat.endsWith('· '+bcat));
+  const r=CARDS.filter(c=>inCat(c)&&(bflt==='all'||(bflt==='problem'?isProb(c):status(c)===bflt))&&(!q||c.en.toLowerCase().includes(q)||c.de.toLowerCase().includes(q))).slice(0,150);
   document.getElementById('lst').innerHTML='<table>'+r.map(c=>{const s=S.cards[c.id];const st=status(c);const t=st==='new'?'neu':st==='suspended'?'ausgeblendet':st==='review'?(s.ivl+' Tg'):'lernt';
    return `<tr><td><b>${esc(c.en)}</b></td><td>${esc(c.de)}</td><td><span class="tag">${t}</span>${st==='suspended'?` <button class="lnk" data-un="${esc(c.id)}">Einblenden</button>`:''}</td></tr>`}).join('')+'</table>'+(r.length===150?'<div class="hint">Nur die ersten 150 Treffer – Suche eingrenzen.</div>':'')+(r.length===0?'<div class="hint">Keine Treffer.</div>':'');
   document.querySelectorAll('[data-un]').forEach(b=>b.onclick=()=>{unhideCard(b.dataset.un);save();toast('✓ Wieder eingeblendet');rBrowse()})};
- document.getElementById('q').oninput=f;document.getElementById('flt').onchange=e=>{bflt=e.target.value;f()};
+ document.getElementById('q').oninput=f;document.getElementById('flt').onchange=e=>{bflt=e.target.value;f()};document.getElementById('cflt').onchange=e=>{bcat=e.target.value;f()};
  const ua=document.getElementById('unall');if(ua)ua.onclick=()=>{if(confirm(hid+' Karten wieder einblenden?')){CARDS.forEach(c=>unhideCard(c.id));save();toast('✓ Alle eingeblendet');rBrowse()}};
  f()}
 function opt(v,cur,label){return `<option value="${v}"${String(cur)===String(v)?' selected':''}>${label}</option>`}
