@@ -6,12 +6,12 @@
 <meta name="theme-color" content="#2f5bea">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Vokabeln">
+<meta name="apple-mobile-web-app-title" content="Lexicanum Oxo">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 
-<title>Vokabeltrainer B2</title>
+<title>Lexicanum Oxo</title>
 <style>
 :root{--font:"Inter","Segoe UI Variable Text","Segoe UI",Roboto,system-ui,-apple-system,sans-serif;--hf:var(--font);--r:14px;--on:#fff;--bg:#f4f5f7;--card:#fff;--ink:#1d2330;--mute:#6b7385;--line:#dfe3ea;--acc:#2f5bea;--ok:#1f9d55;--warn:#d98a00;--bad:#d64545}
 @media(prefers-color-scheme:dark){:root{--bg:#14171f;--card:#1e2330;--ink:#e8ebf2;--mute:#9aa3b8;--line:#2d3446;--acc:#6c8cff}}
@@ -385,7 +385,7 @@ main{animation:vin .5s cubic-bezier(.2,.8,.2,1) both}
 </style>
 </head>
 <body>
-<header><h1>Vokabeltrainer B2</h1>
+<header><h1>Lexicanum Oxo</h1>
 <nav><button data-v="learn" class="on"><i>📖</i><span>Lernen</span></button><button data-v="stats"><i>📊</i><span>Fortschritt</span></button><button data-v="practice"><i>✏️</i><span>Üben</span></button><button data-v="browse"><i>🔎</i><span>Wörter</span></button><button data-v="set"><i>⚙️</i><span>Einstellungen</span></button></nav></header>
 <main id="app"></main><i class="sky" aria-hidden="true"><b class="cl a"></b><b class="cl b"></b><b class="cl c"></b><u class="st s1"></u><u class="st s2"></u><u class="st s3"></u><u class="st s4"></u><u class="st s5"></u></i><i class="pix" aria-hidden="true"><b></b></i><i class="deco dl" aria-hidden="true"><b></b></i><i class="deco dr" aria-hidden="true"><b></b></i>
 <script>
@@ -5359,7 +5359,7 @@ you|du, Sie, ihr; dich, dir, euch|Are you coming to the meeting this afternoon?|
 young|jung; Junge (Tiere)|When I was young, I lived on a farm with my grandparents.|adj., n.
 your|dein(e), Ihr(e), euer|Is this your bag, or does it belong to someone else?|det.
 yourself|dich (selbst), dir (selbst), sich (selbst)|Be careful with that knife, or you might hurt yourself.|pron.`;
-const VERSION='6.3';
+const VERSION='6.5';
 const KEY='vokabeltrainer_v2';
 const MIN=60000, DAY=86400000, STEPS=[1,10], RELEARN=[10];
 const LEVELS=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];
@@ -5416,7 +5416,7 @@ function preview(st,g,id){
   else if(g===2){o.wait=10*MIN}
   else{const base=Math.max(1,c.ivl);o.state='review';o.ivl=g===3?base:Math.max(base+1,Math.round(base*1.5));o.wait=o.ivl*DAY}
  }else if(c.state==='new'||c.state==='learning'){
-  const cur=c.state==='new'?0:c.step;
+  const cur=c.state==='new'?0:Math.min(Math.max(0,+c.step||0),STEPS.length-1);
   if(g===1){o.state='learning';o.step=0;o.wait=STEPS[0]*MIN}
   else if(g===2){o.state='learning';o.step=cur;o.wait=STEPS[cur]*MIN*(cur===0?1.5:1)}
   else if(g===3){const nx=cur+1;if(nx<STEPS.length){o.state='learning';o.step=nx;o.wait=STEPS[nx]*MIN}else{o.state='review';o.ivl=1;o.wait=DAY}}

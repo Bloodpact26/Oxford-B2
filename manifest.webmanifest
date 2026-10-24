@@ -1,6 +1,6 @@
 {
-  "name": "Vokabeltrainer B2",
-  "short_name": "Vokabeln",
+  "name": "Lexicanum Oxo",
+  "short_name": "Lexicanum",
   "description": "Oxford 3000/5000 Vokabeln mit Spaced Repetition",
   "start_url": "./index.html",
   "scope": "./",
