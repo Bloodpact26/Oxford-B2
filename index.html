@@ -442,7 +442,7 @@ html[data-theme=hyrule] body,html[data-theme=hyrule] main{image-rendering:auto}
 :root[data-done][data-theme=w40k] .pix b::after{content:"";position:absolute;left:38.6px;top:41.3px;width:30px;height:30px;border-radius:50%;border:1.5px solid #ff6a55;box-sizing:border-box;opacity:0;pointer-events:none;animation:ringp 2.6s linear 1 both}
 @keyframes ringp{0%{opacity:0;scale:2.3}4%{opacity:.9;scale:2.1}11%{opacity:.9;scale:.35}13%{opacity:0;scale:.3}52%{opacity:0;scale:.3}54%{opacity:.9;scale:.6}60%{opacity:0;scale:2.1}90%{opacity:0;scale:2.1}93%{opacity:.8;scale:2.1}100%{opacity:0;scale:.3}}
 :root[data-done][data-theme=w40k] .pix b::before{content:"";position:absolute;left:38.6px;top:41.3px;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#fff0e8 0,#ff6a55ee 22%,#e0382c88 45%,#a02a2a00 72%);opacity:0;pointer-events:none;animation:beamfade 2.6s linear 1 both,flick .27s steps(1,end) infinite}
-:root[data-done][data-theme=w40k] .pix b u{display:block;position:absolute;left:-101.4px;top:56.3px;width:520px;height:var(--h);background:linear-gradient(#e0382c14 0,#e0382c55 30%,#ff4030dd 88%,#ffc0a8ee 100%);clip-path:polygon(190px 0,17.80000000000001px 100%,22.19999999999999px 100%);filter:drop-shadow(0 0 2px #b8322caa);opacity:0;pointer-events:none;transform-origin:190px 0;-webkit-mask-image:repeating-linear-gradient(180deg,#000 0 6px,#0007 6px 8px,#000 8px 12px,#0004 12px 13px,#000 13px 19px,#000a 19px 21px);mask-image:repeating-linear-gradient(180deg,#000 0 6px,#0007 6px 8px,#000 8px 12px,#0004 12px 13px,#000 13px 19px,#000a 19px 21px);animation:beamx 1.9s linear calc(var(--d) + .25s) 1 both,beamfade 1.9s linear calc(var(--d) + .25s) 1 both,flick .27s steps(1,end) infinite,msh .7s linear infinite,wob 1.3s ease-in-out infinite alternate}
+:root[data-done][data-theme=w40k] .pix b u{display:block;position:absolute;left:-136.4px;top:56.3px;width:520px;height:var(--h);background:linear-gradient(#e0382c14 0,#e0382c55 30%,#ff4030dd 88%,#ffc0a8ee 100%);clip-path:polygon(190px 0,17.80000000000001px 100%,22.19999999999999px 100%);filter:drop-shadow(0 0 2px #b8322caa);opacity:0;pointer-events:none;transform-origin:190px 0;-webkit-mask-image:repeating-linear-gradient(180deg,#000 0 6px,#0007 6px 8px,#000 8px 12px,#0004 12px 13px,#000 13px 19px,#000a 19px 21px);mask-image:repeating-linear-gradient(180deg,#000 0 6px,#0007 6px 8px,#000 8px 12px,#0004 12px 13px,#000 13px 19px,#000a 19px 21px);animation:beamx 1.9s linear calc(var(--d) + .25s) 1 both,beamfade 1.9s linear calc(var(--d) + .25s) 1 both,flick .27s steps(1,end) infinite,msh .7s linear infinite,wob 1.3s ease-in-out infinite alternate}
 :root[data-done][data-theme=w40k] .pix b u:nth-child(even){animation-duration:1.9s,1.9s,.31s,.55s,.9s}
 :root[data-done][data-theme=w40k] .pix b u::after{content:"";position:absolute;left:168px;top:calc(100% - 5px);width:44px;height:10px;border-radius:50%;background:radial-gradient(ellipse,#f0c8bc 0,#d04a3ecc 35%,#a02a2a00 72%);box-shadow:0 0 7px 1px #ff3a2a55;animation:spotx 1.9s linear calc(var(--d) + .25s) 1 both,spotv 1.9s linear calc(var(--d) + .25s) 1 both}
 .pix b u:nth-child(1){--d:0s;--h:54px}.pix b u:nth-child(2){--d:.13s;--h:64px}.pix b u:nth-child(3){--d:.26s;--h:72px}.pix b u:nth-child(4){--d:.40s;--h:58px}
@@ -548,6 +548,13 @@ html[data-theme=wiese]{background-position:0 0,left 0 bottom 42px,left -70px bot
 :is([data-view=learn],[data-view=practice])[data-theme=wiese] .sky{bottom:28px}
 :is([data-view=learn],[data-view=practice])[data-theme=wiese] .deco{bottom:8px}
 }
+:root[data-done][data-theme=w40k] .pix b u{filter:none!important;-webkit-mask-image:none!important;mask-image:none!important}
+:root[data-done][data-theme=w40k] .pix b u:nth-child(3),:root[data-done][data-theme=w40k] .pix b u:nth-child(4),:root[data-done][data-theme=w40k] .pix b u:nth-child(9),:root[data-done][data-theme=w40k] .pix b u:nth-child(10),:root[data-done][data-theme=w40k] .pix b u:nth-child(11),:root[data-done][data-theme=w40k] .pix b u:nth-child(12),:root[data-done][data-theme=w40k] .pix b u:nth-child(15),:root[data-done][data-theme=w40k] .pix b u:nth-child(16),:root[data-done][data-theme=w40k] .pix b u:nth-child(21),:root[data-done][data-theme=w40k] .pix b u:nth-child(22),:root[data-done][data-theme=w40k] .pix b u:nth-child(23),:root[data-done][data-theme=w40k] .pix b u:nth-child(24){display:none!important}
+:root[data-done][data-theme=w40k] .pix b u:nth-child(-n+4){animation-name:beamx,beamfade!important}
+:root[data-done][data-theme=w40k] .pix b u:nth-child(n+5):nth-child(-n+12){animation-name:beamy,beamfade!important}
+:root[data-done][data-theme=w40k] .pix b u:nth-child(n+13):nth-child(-n+16){animation-name:beamxr,beamfade!important}
+:root[data-done][data-theme=w40k] .pix b u:nth-child(n+17){animation-name:beamyr,beamfade!important}
+@media(min-width:701px){:root[data-done][data-theme=w40k] .pix b u{left:-101.4px!important}:root[data-done][data-theme=w40k] .pix b ::before,:root[data-done][data-theme=w40k] .pix b ::after{left:73.6px!important}}
 </style>
 </head>
 <body>
@@ -5525,7 +5532,7 @@ you|du, Sie, ihr; dich, dir, euch|Are you coming to the meeting this afternoon?|
 young|jung; Junge (Tiere)|When I was young, I lived on a farm with my grandparents.|adj., n.
 your|dein(e), Ihr(e), euer|Is this your bag, or does it belong to someone else?|det.
 yourself|dich (selbst), dir (selbst), sich (selbst)|Be careful with that knife, or you might hurt yourself.|pron.`;
-const VERSION='8.30';
+const VERSION='8.31';
 const KEY='vokabeltrainer_v2';
 const MIN=60000, DAY=86400000, STEPS=[1,10], RELEARN=[10];
 const LEVELS=['Oxford 3000 · B2','Oxford 5000 · B2','Oxford 3000 · B1','Oxford 5000 · C1','Oxford 3000 · A2','Oxford 3000 · A1'];
